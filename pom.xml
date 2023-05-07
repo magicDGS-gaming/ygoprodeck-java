@@ -13,6 +13,7 @@
         <module>ygoprodeck-model</module>
         <module>ygoprodeck-utils</module>
         <module>ygoprodeck-testutils</module>
+        <module>ygoprodeck-retrofit</module>
     </modules>
 
     <properties>
