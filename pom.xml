@@ -12,6 +12,7 @@
     <modules>
         <module>ygoprodeck-model</module>
         <module>ygoprodeck-utils</module>
+        <module>ygoprodeck-testutils</module>
     </modules>
 
     <properties>
