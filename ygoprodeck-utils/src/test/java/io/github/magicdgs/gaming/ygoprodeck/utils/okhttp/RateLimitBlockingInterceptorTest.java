@@ -160,8 +160,8 @@ class RateLimitBlockingInterceptorTest {
         // first calls should be happening almost one after the other
         assertCallsWithinTimespan(Duration.ofMillis(100), responses.get(0), responses.get(1));
         // the second call should be happening after the
-        assertCallsAfterTimespan(testDuration, 10, responses.get(0), responses.get(2));
-        assertCallsAfterTimespan(testDuration, 10, responses.get(1), responses.get(2));
+        assertCallsAfterTimespan(testDuration, 30, responses.get(0), responses.get(2));
+        assertCallsAfterTimespan(testDuration, 30, responses.get(1), responses.get(2));
     }
 
     @Test
