@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.magicdgs-gaming</groupId>
+    <artifactId>ygoprodeck-java-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ygoprodeck-model</module>
+        <module>ygoprodeck-utils</module>
+        <module>ygoprodeck-testutils</module>
+        <module>ygoprodeck-feign</module>
+        <module>ygoprodeck-retrofit</module>
+    </modules>
+
+    <properties>
+		<!-- TO BE overriden by the children if necessary -->
+        <openapi-submodule.dir>${project.basedir}/openapi</openapi-submodule.dir>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- openapi common properties -->
+        <openapi-generator.inputSpec>${openapi-submodule.dir}/src/ygoprodeck-api.yaml</openapi-generator.inputSpec>
+        <openapi-generator.basePackage>io.github.magicdgs.gaming.ygoprodeck</openapi-generator.basePackage>
+        <openapi-generator.apiPackage>${openapi-generator.basePackage}.api</openapi-generator.apiPackage>
+        <openapi-generator.modelPackage>${openapi-generator.basePackage}.model</openapi-generator.modelPackage>
+        <openapi-generator.dateLibrary>java8-localdatetime</openapi-generator.dateLibrary>
+        <openapi-generator.useJakartaEe>true</openapi-generator.useJakartaEe>
+        <openapi-generator.openApiNullable>false</openapi-generator.openApiNullable>
+        <openapi-generator.generateAliasAsModel>true</openapi-generator.generateAliasAsModel>
+        <!-- versions -->
+        <lombok.version>1.18.26</lombok.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <logback.version>1.4.5</logback.version>
+        <resilience4j.version>2.0.0</resilience4j.version>
+        <jakarta-bom.version>10.0.0</jakarta-bom.version>
+        <jackson-bom.version>2.14.2</jackson-bom.version>
+        <okhttp-bom.version>4.10.0</okhttp-bom.version>
+        <feign-bom.version>12.3</feign-bom.version>
+        <retrofit2.version>2.9.0</retrofit2.version>
+        <junit-bom.version>5.9.2</junit-bom.version>
+    </properties>
+
+    <dependencies>
+        <!-- lombok should be provided to all plug-ins, as it might be used everywhere -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- BOM dependencies-->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-bom</artifactId>
+                <version>${jakarta-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp-bom</artifactId>
+                <version>${okhttp-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-bom</artifactId>
+                <version>${feign-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-ratelimiter</artifactId>
+                <version>${resilience4j.version}</version>
+            </dependency>
+            <!-- retrofit2 dependencies -->
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${retrofit2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-scalars</artifactId>
+                <version>${retrofit2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-jackson</artifactId>
+                <version>${retrofit2.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>6.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+</project>

@@ -1,0 +1,75 @@
+package {{invokerPackage}};
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+
+public class CollectionFormats {
+
+  /**
+   * <p>Encodes a collection of query parameters according to the Swagger
+   * collection format.</p>
+   *
+   * <p>Of the various collection formats defined by Swagger ("csv", "tsv",
+   * etc), Feign only natively supports "multi". This utility generates the
+   * other format types so it will be properly processed by Feign.</p>
+   *
+   * <p>Note, as part of reformatting, it URL encodes the parameters as
+   * well.</p>
+   * @param parameters The collection object to be formatted. This object will
+   *                   not be changed.
+   * @param collectionFormat The Swagger collection format (eg, "csv", "tsv",
+   *                         "pipes"). See the
+   *                         <a href="http://swagger.io/specification/#parameter-object-44">
+   *                         OpenAPI Spec</a> for more details.
+   * @return An object that will be correctly formatted by Feign.
+   */
+  public static String encodeCollection(Collection<?> parameters,
+                                     String collectionFormat) {
+    if (parameters == null) {
+      return null;
+    }
+    List<String> stringValues = new ArrayList<>(parameters.size());
+    for (Object parameter : parameters) {
+      // ignore null values (same behavior as Feign)
+      if (parameter != null) {
+        stringValues.add(encode(parameter));
+      }
+    }
+    switch (collectionFormat) {
+      case "csv":
+      default:
+        return String.join(",", stringValues);
+      case "ssv":
+        return String.join(" ", stringValues);
+      case "tsv":
+        return String.join("\t", stringValues);
+      case "pipes":
+        return String.join("|", stringValues);
+    }
+  }
+
+  /**
+   * URL encode a single query parameter.
+   * @param parameter The query parameter to encode. This object will not be
+   *                  changed.
+   * @return The URL encoded string representation of the parameter. If the
+   *         parameter is null, returns null.
+   */
+  public static String encode(Object parameter) {
+    if (parameter == null) {
+      return null;
+    }
+    try {
+      return URLEncoder.encode(parameter.toString(), "UTF-8").replaceAll("\\+", "%20");
+    } catch (UnsupportedEncodingException e) {
+      // Should never happen, UTF-8 is always supported
+      throw new RuntimeException(e);
+    }
+  }
+
+}
