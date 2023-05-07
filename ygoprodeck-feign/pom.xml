@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.magicdgs-gaming</groupId>
+        <artifactId>ygoprodeck-java-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ygoprodeck-feign</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <!-- this should be overriden on children -->
+        <openapi-submodule.dir>${project.basedir}/../openapi</openapi-submodule.dir>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ygoprodeck-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ygoprodeck-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ygoprodeck-testutils</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-client</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- spec, templates and generator options -->
+                            <inputSpec>${openapi-generator.inputSpec}</inputSpec>
+                            <apiPackage>${openapi-generator.apiPackage}.feign</apiPackage>
+                            <invokerPackage>${openapi-generator.apiPackage}.feign</invokerPackage>
+                            <modelPackage>${openapi-generator.modelPackage}</modelPackage>
+                            <templateDirectory>openapi-template</templateDirectory>
+                            <generatorName>java</generatorName>
+                            <configOptions>
+                                <library>feign</library>
+                                <openApiNullable>${openapi-generator.openApiNullable}</openApiNullable>
+                                <useJakartaEe>${openapi-generator.useJakartaEe}</useJakartaEe>
+                                <dateLibrary>${openapi-generator.dateLibrary}</dateLibrary>
+                            </configOptions>
+                            <generateAliasAsModel>${openapi-generator.generateAliasAsModel}</generateAliasAsModel>
+                            <!-- generate only apis and some supporting files-->
+                            <generateApis>true</generateApis>
+                            <supportingFilesToGenerate>EncodingUtils.java,ApiResponse.java,ApiResponseDecoder.java</supportingFilesToGenerate>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModels>false</generateModels>
+                            <generateModelTests>false</generateModelTests>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- this allows to configure the sources -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
