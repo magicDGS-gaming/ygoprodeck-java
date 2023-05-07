@@ -9,6 +9,10 @@
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>ygoprodeck-model</module>
+    </modules>
+
     <properties>
 		<!-- TO BE overriden by the children if necessary -->
         <openapi-submodule.dir>${project.basedir}/openapi</openapi-submodule.dir>
