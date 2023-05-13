@@ -35,14 +35,14 @@ public class ProductionYgoprodeckClientContractIT extends DatabaseContractTestSp
 	@Test
 	public void testGetImage() throws Exception {
 		var resultCallback = TEST_CLIENT.executeWithCallback(client -> //
-				client.getImagesApi().getImage("cards", 6983839L));
+				client.getImagesApi().getCardImage(6983839L));
 		assertImageResponse(resultCallback.getResponse().get());
 	}
 
 	@Test
-	public void testGetImageCropped() throws Exception {
+	public void testGetCardCroppedImage() throws Exception {
 		var resultCallback = TEST_CLIENT.executeWithCallback(client -> //
-				client.getImagesApi().getImage("cards_cropped", 27551L));
+				client.getImagesApi().getCardCroppedImage(27551L));
 		assertImageResponse(resultCallback.getResponse().get());
 	}
 
