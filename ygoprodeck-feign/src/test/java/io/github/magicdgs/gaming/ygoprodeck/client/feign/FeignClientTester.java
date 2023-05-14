@@ -11,6 +11,8 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class FeignClientTester implements DatabaseClientTester {
@@ -42,8 +44,8 @@ public class FeignClientTester implements DatabaseClientTester {
     }
 
     @Override
-    public CardSetInfo callGetCardSetInfo(String setCode) throws Exception {
-        return client.getDatabaseApi().getCardSetInfo(setCode);
+    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryParams params) throws Exception {
+        return client.getDatabaseApi().getCardSetInfo(params);
     }
 
     @Override
@@ -52,29 +54,22 @@ public class FeignClientTester implements DatabaseClientTester {
     }
 
     @Override
-    public CardInfoDTO callGetCardInfo() throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams();
+    public CardInfoDTO callGetCardInfo(GetCardInfoQueryParams params) throws Exception {
         return client.getDatabaseApi().getCardInfo(params);
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithMiscParam(YesSwitch yesSwitch) throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams() //
-                .misc(yesSwitch);
+    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryParams params) throws Exception {
         return client.getDatabaseApi().getCardInfo(params);
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithPagination(int num, int offset) throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams() //
-                .num(num).offset(offset);
+    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryParams params) throws Exception {
         return client.getDatabaseApi().getCardInfo(params);
     }
 
     @Override
-    public void callGetCardInfoWithWrongTypeParam(String wrongType) throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams() //
-                .type(List.of(wrongType));
+    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryParams params) throws Exception {
         client.getDatabaseApi().getCardInfo(params);
     }
 }

@@ -1,7 +1,6 @@
 package io.github.magicdgs.gaming.ygoprodeck.integrationtest;
 
 import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.DatabaseApi;
-import io.github.magicdgs.gaming.ygoprodeck.client.retrofit.RetrofitClientTester;
 import io.github.magicdgs.gaming.ygoprodeck.client.retrofit.YgoprodeckRetrofitClient;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestClientFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,7 @@ import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
 
 @Slf4j
 public class ProductionYgoprodeckClientParametersIT {
@@ -27,7 +27,7 @@ public class ProductionYgoprodeckClientParametersIT {
 
     @Test
     public void testGetCardinfoWithDateParams() throws Exception {
-        var query = new DatabaseApi.GetCardInfoQueryParams() //
+        var query = new GetCardInfoQueryParams() //
                 .startdate(LocalDate.of(2000, 1, 1))//
                 .enddate(LocalDate.of(2004, 1, 1)) //
                 // limit the output not to stress the API

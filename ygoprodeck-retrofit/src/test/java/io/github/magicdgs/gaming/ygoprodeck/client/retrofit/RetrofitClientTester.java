@@ -5,17 +5,14 @@ import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.DatabaseApi;
 import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckApiResultCallback;
 import io.github.magicdgs.gaming.ygoprodeck.model.*;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseClientTester;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import retrofit2.Call;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
 
 @RequiredArgsConstructor
 public class RetrofitClientTester implements DatabaseClientTester {
@@ -106,9 +103,7 @@ public class RetrofitClientTester implements DatabaseClientTester {
     }
 
     @Override
-    public CardSetInfo callGetCardSetInfo(String setCode) throws Exception {
-        var params = new DatabaseApi.GetCardSetInfoQueryParams() //
-                .setcode(setCode);
+    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryParams params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardSetInfo(params));
     }
 
@@ -118,29 +113,22 @@ public class RetrofitClientTester implements DatabaseClientTester {
     }
 
     @Override
-    public CardInfoDTO callGetCardInfo() throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams();
+    public CardInfoDTO callGetCardInfo(GetCardInfoQueryParams params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardInfo(params));
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithMiscParam(YesSwitch yesSwitch) throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams() //
-                .misc(yesSwitch);
+    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryParams params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardInfo(params));
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithPagination(int num, int offset) throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams() //
-                .num(num).offset(offset);
+    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryParams params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardInfo(params));
     }
 
     @Override
-    public void callGetCardInfoWithWrongTypeParam(String wrongType) throws Exception {
-        var params = new DatabaseApi.GetCardInfoQueryParams() //
-                .type(List.of(wrongType));
+    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryParams params) throws Exception {
         executeCall(client -> client.getDatabaseApi().getCardInfo(params), false);
     }
 }

@@ -7,10 +7,11 @@ import lombok.RequiredArgsConstructor;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+
+import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
 
 @RequiredArgsConstructor
 public final class ResourceMockServerClientTester implements DatabaseClientTester {
@@ -40,9 +41,9 @@ public final class ResourceMockServerClientTester implements DatabaseClientTeste
     }
 
     @Override
-    public CardSetInfo callGetCardSetInfo(String setCode) throws Exception {
+    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryParams params) throws Exception {
         enqueueSuccessResource(YgoprodeckFilesResources.CARDSETINFO_SETCODE_RESOURCE);
-        return delegate.callGetCardSetInfo(setCode);
+        return delegate.callGetCardSetInfo(params);
     }
 
     @Override
@@ -52,27 +53,27 @@ public final class ResourceMockServerClientTester implements DatabaseClientTeste
     }
 
     @Override
-    public CardInfoDTO callGetCardInfo() throws Exception {
+    public CardInfoDTO callGetCardInfo(GetCardInfoQueryParams params) throws Exception {
         enqueueSuccessResource(YgoprodeckFilesResources.CARDINFO_RESOURCE);
-        return delegate.callGetCardInfo();
+        return delegate.callGetCardInfo(params);
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithMiscParam(YesSwitch yesSwitch) throws Exception {
+    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryParams params) throws Exception {
         enqueueSuccessResource(YgoprodeckFilesResources.CARDINFO_MISC_RESOURCE);
-        return delegate.callGetCardInfoWithMiscParam(yesSwitch);
+        return delegate.callGetCardInfoWithMiscParam(params);
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithPagination(int num, int offset) throws Exception {
+    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryParams params) throws Exception {
         enqueueSuccessResource(YgoprodeckFilesResources.CARDINFO_PAGINATED_RESOURCE);
-        return delegate.callGetCardInfoWithPagination(num, offset);
+        return delegate.callGetCardInfoWithPagination(params);
     }
 
     @Override
-    public void callGetCardInfoWithWrongTypeParam(String wrongType) throws Exception {
+    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryParams params) throws Exception {
         enqueueErrorResource(YgoprodeckFilesResources.CARDINFO_TYPE_ERROR_RESOURCE);
-        delegate.callGetCardInfoWithWrongTypeParam(wrongType);
+        delegate.callGetCardInfoWithWrongTypeParam(params);
     }
 
     public void enqueueErrorResource(final String resourceName) throws Exception {

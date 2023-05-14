@@ -8,7 +8,6 @@
         <groupId>io.github.magicdgs-gaming</groupId>
         <artifactId>ygoprodeck-java-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>ygoprodeck-model</artifactId>
@@ -76,18 +75,22 @@
                             <!-- spec, templates and generator options -->
                             <inputSpec>${openapi-generator.inputSpec}</inputSpec>
                             <modelPackage>${openapi-generator.modelPackage}</modelPackage>
+                            <apiPackage>${openapi-generator.basePackage}.utils</apiPackage>
+                            <invokerPackage>${openapi-generator.basePackage}.utils</invokerPackage>
+                            <apiNameSuffix>ApiQueryUtils</apiNameSuffix>
                             <templateDirectory>openapi-template</templateDirectory>
                             <generatorName>java</generatorName>
                             <configOptions>
-                                <library>resttemplate</library>
+                                <library>feign</library>
                                 <useJakartaEe>${openapi-generator.useJakartaEe}</useJakartaEe>
                                 <dateLibrary>${openapi-generator.dateLibrary}</dateLibrary>
                             </configOptions>
                             <generateAliasAsModel>${openapi-generator.generateAliasAsModel}</generateAliasAsModel>
-                            <!-- generate only models -->
+                            <!-- generate models, api and some supporting files -->
+                            <supportingFilesToGenerate>EncodingUtils.java</supportingFilesToGenerate>
                             <generateModelTests>false</generateModelTests>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <generateApis>false</generateApis>
+                            <generateApiTests>false</generateApiTests>
+                            <generateApiDocumentation>false</generateApiDocumentation>
                             <generateModelDocumentation>false</generateModelDocumentation>
                         </configuration>
                     </execution>

@@ -2,13 +2,19 @@ package {{invokerPackage}};
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+* Utilities to support Swagger encoding formats in Feign.
+*/
+public final class EncodingUtils {
 
-public class CollectionFormats {
+  /**
+   * Private constructor. Do not construct this class.
+   */
+  private EncodingUtils() {}
 
   /**
    * <p>Encodes a collection of query parameters according to the Swagger
@@ -40,16 +46,18 @@ public class CollectionFormats {
         stringValues.add(encode(parameter));
       }
     }
+    // Otherwise return a formatted String
+    String[] stringArray = stringValues.toArray(new String[0]);
     switch (collectionFormat) {
       case "csv":
       default:
-        return String.join(",", stringValues);
+        return String.join(",", stringArray);
       case "ssv":
-        return String.join(" ", stringValues);
+        return String.join(" ", stringArray);
       case "tsv":
-        return String.join("\t", stringValues);
+        return String.join("\t", stringArray);
       case "pipes":
-        return String.join("|", stringValues);
+        return String.join("|", stringArray);
     }
   }
 
@@ -71,5 +79,4 @@ public class CollectionFormats {
       throw new RuntimeException(e);
     }
   }
-
 }

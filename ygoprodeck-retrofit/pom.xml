@@ -71,8 +71,9 @@
                         <configuration>
                             <!-- spec, templates and generator options -->
                             <inputSpec>${openapi-generator.inputSpec}</inputSpec>
+                            <packageName>${openapi-generator.basePackage}</packageName>
                             <apiPackage>${openapi-generator.apiPackage}.retrofit</apiPackage>
-                            <invokerPackage>${openapi-generator.apiPackage}.retrofit</invokerPackage>
+                            <invokerPackage>${openapi-generator.basePackage}.retrofit</invokerPackage>
                             <modelPackage>${openapi-generator.modelPackage}</modelPackage>
                             <templateDirectory>openapi-template</templateDirectory>
                             <generatorName>java</generatorName>
@@ -83,12 +84,12 @@
                                 <dateLibrary>${openapi-generator.dateLibrary}</dateLibrary>
                             </configOptions>
                             <generateAliasAsModel>${openapi-generator.generateAliasAsModel}</generateAliasAsModel>
-                            <!-- generate only apis and some supporting files-->
+                            <!-- generate only apis-->
                             <generateApis>true</generateApis>
-                            <supportingFilesToGenerate>CollectionFormats.java</supportingFilesToGenerate>
                             <generateApiTests>false</generateApiTests>
                             <generateModels>false</generateModels>
                             <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>false</generateSupportingFiles>
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateApiDocumentation>false</generateApiDocumentation>
                         </configuration>

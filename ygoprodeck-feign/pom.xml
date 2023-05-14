@@ -76,6 +76,8 @@
                         <configuration>
                             <!-- spec, templates and generator options -->
                             <inputSpec>${openapi-generator.inputSpec}</inputSpec>
+                            <!-- to be used on our templates -->
+                            <packageName>${openapi-generator.basePackage}</packageName>
                             <apiPackage>${openapi-generator.apiPackage}.feign</apiPackage>
                             <invokerPackage>${openapi-generator.apiPackage}.feign</invokerPackage>
                             <modelPackage>${openapi-generator.modelPackage}</modelPackage>
@@ -90,7 +92,7 @@
                             <generateAliasAsModel>${openapi-generator.generateAliasAsModel}</generateAliasAsModel>
                             <!-- generate only apis and some supporting files-->
                             <generateApis>true</generateApis>
-                            <supportingFilesToGenerate>EncodingUtils.java,ApiResponse.java,ApiResponseDecoder.java</supportingFilesToGenerate>
+                            <supportingFilesToGenerate>ApiResponse.java,ApiResponseDecoder.java</supportingFilesToGenerate>
                             <generateApiTests>false</generateApiTests>
                             <generateModels>false</generateModels>
                             <generateModelTests>false</generateModelTests>

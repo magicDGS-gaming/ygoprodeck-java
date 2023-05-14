@@ -1,6 +1,6 @@
 package {{package}};
 
-import {{invokerPackage}}.CollectionFormats.*;
+import static {{packageName}}.utils.{{classname}}QueryUtils.*;
 
 {{#useRxJava2}}
 import io.reactivex.Observable;
@@ -82,24 +82,6 @@ public interface {{classname}} {
   {{^doNotUseRx}}{{#useRxJava2}}{{#returnType}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava2}}{{#useRxJava3}}{{#returnType}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava3}}{{/doNotUseRx}}{{#doNotUseRx}}Call<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Void{{/returnType}}{{/isResponseFile}}>{{/doNotUseRx}} {{operationId}}(
     {{#allParams}}{{^isQueryParam}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}},{{/isQueryParam}}{{/allParams}}@retrofit2.http.QueryMap {{operationIdCamelCase}}QueryParams queryParams
   );
-  
-   /**
-   * A convenience class for generating query parameters for the
-   * <code>{{operationId}}</code> method in a fluent style.
-   */
-    public static class {{operationIdCamelCase}}QueryParams extends LinkedHashMap<String, Object> {
-    public static final Set<String> ALLOWED_PARAMS = Set.of({{#queryParams}}"{{baseName}}"{{^-last}},{{/-last}}{{/queryParams}});
-  
-    {{#queryParams}}
-    
-    public {{operationIdCamelCase}}QueryParams {{paramName}}(final {{{dataType}}} value) {
-      final String valueString = CollectionFormats.{{#collectionFormat}}{{#isCollectionFormatMulti}}encodeCollection(value, "multi"){{/isCollectionFormatMulti}}{{^isCollectionFormatMulti}}encodeCollection(value, "{{collectionFormat}}"){{/isCollectionFormatMulti}}{{/collectionFormat}}{{^collectionFormat}}encode(value){{/collectionFormat}};
-      super.put("{{baseName}}", valueString);
-      return this;
-    }
-    {{/queryParams}}
-    
-  }
   {{/hasQueryParams}}
   
   {{/operation}}

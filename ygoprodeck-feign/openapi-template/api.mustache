@@ -1,6 +1,6 @@
 package {{package}};
 
-import {{invokerPackage}}.EncodingUtils;
+import static {{packageName}}.utils.{{classname}}QueryUtils.*;
 {{#legacyDates}}
 import {{invokerPackage}}.ParamExpander;
 {{/legacyDates}}
@@ -164,25 +164,6 @@ public interface {{classname}} {
       {{/-last}}{{/headerParams}}
       })
    ApiResponse<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{nickname}}WithHttpInfo({{#allParams}}{{^isQueryParam}}{{^isBodyParam}}{{^isFormParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isFormParam}}{{#isFormParam}}@Param("{{baseName}}") {{/isFormParam}}{{/isBodyParam}}{{{dataType}}} {{paramName}}, {{/isQueryParam}}{{/allParams}}@QueryMap(encoded=true) {{operationIdCamelCase}}QueryParams queryParams);
-
-
-   /**
-   * A convenience class for generating query parameters for the
-   * <code>{{operationId}}</code> method in a fluent style.
-   */
-  public static class {{operationIdCamelCase}}QueryParams extends HashMap<String, Object> {
-      {{#queryParams}}
-    public {{operationIdCamelCase}}QueryParams {{paramName}}(final {{{dataType}}} value) {
-        {{#collectionFormat}}
-      put("{{baseName}}", EncodingUtils.encodeCollection(value, "{{collectionFormat}}"));
-        {{/collectionFormat}}
-        {{^collectionFormat}}
-      put("{{baseName}}", EncodingUtils.encode(value));
-        {{/collectionFormat}}
-      return this;
-    }
-      {{/queryParams}}
-  }
     {{/hasQueryParams}}
   {{/operation}}
 {{/operations}}

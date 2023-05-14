@@ -6,7 +6,10 @@ import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
 
 @Slf4j
 public abstract class DatabaseContractTestSpec {
@@ -59,7 +62,9 @@ public abstract class DatabaseContractTestSpec {
 	@Test
 	public final void testGetCardsetInfo() throws Exception {
 		String expectedSetCode = YgoprodeckFilesResources.CARDSETINFO_SETCODE_PARAM;
-		var result = getClientTester().callGetCardSetInfo(expectedSetCode);
+		final var params = new GetCardSetInfoQueryParams()
+				.setcode(expectedSetCode);
+		var result = getClientTester().callGetCardSetInfo(params);
 		assertAll(
 				() -> assertDoesNotThrow(() -> JsonConverter.asJson(result)),
 				() -> assertEquals(expectedSetCode, result.getSetCode()),
@@ -70,7 +75,7 @@ public abstract class DatabaseContractTestSpec {
 	
 	@Test
 	public final void testGetCardinfoWithoutParams() throws Exception {
-		var result = getClientTester().callGetCardInfo();
+		var result = getClientTester().callGetCardInfo(new GetCardInfoQueryParams());
 		assertAll(
 				() -> assertDoesNotThrow(() -> JsonConverter.asJson(result)),
 				() -> assertTrue(result.getData().size() > 1000),
@@ -81,7 +86,8 @@ public abstract class DatabaseContractTestSpec {
 	
 	@Test
 	public final void testGetCardinfoWithMiscParam() throws Exception {
-		var result = getClientTester().callGetCardInfoWithMiscParam(YesSwitch.YES);
+		final var params = new GetCardInfoQueryParams().misc(YesSwitch.YES);
+		var result = getClientTester().callGetCardInfoWithMiscParam(params);
 		assertAll(
 				() -> assertDoesNotThrow(() -> JsonConverter.asJson(result)),
 				// a list of 1 element
@@ -93,10 +99,10 @@ public abstract class DatabaseContractTestSpec {
 	
 	@Test
 	public final void testGetCardinfoWithPagination() throws Exception {
-		var result = getClientTester().callGetCardInfoWithPagination(
-				YgoprodeckFilesResources.CARDINFO_PAGINATED_NUM_PARAM,
-				YgoprodeckFilesResources.CARDINFO_PAGINATED_OFFSET_PARAM
-		);
+		final var params = new GetCardInfoQueryParams()
+				.num(YgoprodeckFilesResources.CARDINFO_PAGINATED_NUM_PARAM)
+				.offset(YgoprodeckFilesResources.CARDINFO_PAGINATED_OFFSET_PARAM);
+		var result = getClientTester().callGetCardInfoWithPagination(params);
 		assertAll(
 				() -> assertDoesNotThrow(() -> JsonConverter.asJson(result)),
 				() -> assertEquals(YgoprodeckFilesResources.CARDINFO_PAGINATED_NUM_PARAM, result.getData().size()),
@@ -109,8 +115,10 @@ public abstract class DatabaseContractTestSpec {
 	
 	@Test
 	public final void testGetCardInfoWithWrongTypeParameter() throws Exception {
+		final var params = new GetCardInfoQueryParams()
+				.type(List.of(YgoprodeckFilesResources.CARDINFO_TYPE_ERROR_PARAM));
 		final var exception = assertThrows(YgoprodeckResponseErrorException.class, //
-				() -> getClientTester().callGetCardInfoWithWrongTypeParam(YgoprodeckFilesResources.CARDINFO_TYPE_ERROR_PARAM));
+				() -> getClientTester().callGetCardInfoWithWrongTypeParam(params));
 		assertNotNull(exception.getError());
 	}
 	
