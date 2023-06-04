@@ -1,12 +1,8 @@
-name: build
+name: build-main
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 jobs:
   build:
@@ -28,3 +24,23 @@ jobs:
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@v3.0.1
+
+  publish-snapshot:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Publish SNAPSHOT
+        run: ./mvnw -B --no-transfer-progress deploy -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
