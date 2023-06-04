@@ -4,12 +4,11 @@ name: publish-snapshot
 on:
   workflow_run:
     workflows: [ "build" ]
-    type: [ completed ]
+    types: [ completed ]
     branches: [ "main" ]
 
 jobs:
   publish-snapshot:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
