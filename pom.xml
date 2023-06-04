@@ -154,4 +154,16 @@
 
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <name>GitHub magicDGS-gaming Packages</name>
+            <url>>https://maven.pkg.github.com/magicDGS-gaming/ygoprodeck-java</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
