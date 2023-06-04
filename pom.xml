@@ -162,7 +162,7 @@
         <snapshotRepository>
             <id>github</id>
             <name>GitHub magicDGS-gaming Packages</name>
-            <url>>https://maven.pkg.github.com/magicDGS-gaming/ygoprodeck-java</url>
+            <url>https://maven.pkg.github.com/magicDGS-gaming/ygoprodeck-java</url>
         </snapshotRepository>
     </distributionManagement>
 
