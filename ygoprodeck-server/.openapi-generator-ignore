@@ -1,0 +1,2 @@
+# Ignore the Controller classes as we implement them
+**/*ApiController.java

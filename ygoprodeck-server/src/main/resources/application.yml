@@ -1,0 +1,6 @@
+server:
+  port: 8080
+ygoprodeck.server:
+  storage.baseDirectory: ${user.home}/.ygoprodeck-server
+  db.forceReload: true
+

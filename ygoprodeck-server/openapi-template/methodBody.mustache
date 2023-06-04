@@ -1,0 +1,8 @@
+{{^reactive}}
+return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>({{#returnSuccessCode}}HttpStatus.OK{{/returnSuccessCode}}{{^returnSuccessCode}}HttpStatus.NOT_IMPLEMENTED{{/returnSuccessCode}}){{#async}}){{/async}};
+{{/reactive}}
+{{#reactive}}
+Mono<Void> result = Mono.empty();
+        exchange.getResponse().setStatusCode({{#returnSuccessCode}}HttpStatus.OK{{/returnSuccessCode}}{{^returnSuccessCode}}HttpStatus.NOT_IMPLEMENTED{{/returnSuccessCode}});
+        return result{{#allParams}}{{#isBodyParam}}{{^isArray}}{{#paramName}}.then({{.}}){{/paramName}}{{/isArray}}{{#isArray}}{{#paramName}}.thenMany({{.}}){{/paramName}}{{/isArray}}{{/isBodyParam}}{{/allParams}}.then(Mono.empty());
+{{/reactive}}
