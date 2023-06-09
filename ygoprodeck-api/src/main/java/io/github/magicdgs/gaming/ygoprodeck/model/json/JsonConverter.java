@@ -29,13 +29,24 @@ public class JsonConverter {
 	private static SimpleModule getYgoprodeckModule() {
 		if (YGOPRODECK_MODULE == null) {
 			final DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			YGOPRODECK_MODULE = new SimpleModule("io/github/magicdgs/gaming/ygoprodeck") //
+			YGOPRODECK_MODULE = new SimpleModule(JsonConverter.class.getPackageName()) //
 					.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(formatter)) //
 					.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(formatter));
 		}
 		return YGOPRODECK_MODULE;
 	}
-	
+
+	/**
+	 * Creates and {@link ObjectMapper} safe to use with the API.
+	 * </br>
+	 * The mapper contains some customizations for serialization/deserialization
+	 * as the one get from the API.
+	 *
+	 * @param strict {@code true} if the mapper should fail on unknown properties;
+	 *               {@code false} otherwise.
+	 *
+	 * @return new instance.
+	 */
 	public static ObjectMapper createObjectMapper(final boolean strict) {
 		final JsonMapper.Builder mapperBuilder = JsonMapper.builder() //
 				.addModule(new JavaTimeModule())
@@ -50,10 +61,12 @@ public class JsonConverter {
 	
 	/**
 	 * Converts the object into a JSON string (pretty-print) with default settings.
+	 * </br>
+	 * Default settings are the same as an strict {@link #createObjectMapper(boolean)}.
 	 * 
-	 * @param object
+	 * @param object the object to serialize.
 	 * 
-	 * @return json string
+	 * @return json string.
 	 */
 	public static String asJson(final Object object) throws Exception {
 		return DEFAULT.writerWithDefaultPrettyPrinter().writeValueAsString(object);
@@ -62,9 +75,10 @@ public class JsonConverter {
 	/**
 	 * Converts the object into a JSON object with default settings.
 	 * 
-	 * @param json
+	 * @param json string to deserialize.
+	 * @param type object type.
 	 * 
-	 * @return json string
+	 * @return deserialized object.
 	 */
 	public static <T> T toObject(final String json, final Class<T> type) throws Exception {
 		return DEFAULT.readValue(json, type);
