@@ -9,7 +9,7 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ygoprodeck-retrofit</artifactId>
+    <artifactId>ygoprodeck-client</artifactId>
 
     <properties>
         <!-- this should be overriden on children -->
