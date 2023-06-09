@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ygoprodeck-model</artifactId>
+            <artifactId>ygoprodeck-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -4,8 +4,16 @@ import java.net.URI;
 import java.nio.file.*;
 import java.util.Collections;
 
-import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
+/**
+ * Test resources to return from mock servers or load.
+ * </br>
+ * Those resources are bundled on the test-utils and can be loaded with {@link #getResource(String)},
+ * where the resource name are the constants on this class.
+ * </br>
+ * To use directly with a mock-server, please use {@link YgoprodeckMockServerFactory#createMockWebServer()}.
+ */
 public class YgoprodeckFilesResources {
 
 	private static URI YGOPRODECK_FILES_URI = null;
@@ -37,10 +45,16 @@ public class YgoprodeckFilesResources {
 	// DOMAIN ENDPOINTS
 	public static final String ARCHETYPES_RESOURCE = "archetypes.php.json";
 
+	/**
+	 * Gets the resource path to load the information.
+	 *
+	 * @param resourceName name of the resource.
+	 *
+	 * @return path to the resource.
+	 */
 	public static Path getResource(final String resourceName) {
 		ensureFilesystem();
-		final String sanitized = resourceName.replaceFirst("/", "");
-		return Paths.get(YGOPRODECK_FILES_URI).resolve(sanitized);
+		return Paths.get(YGOPRODECK_FILES_URI).resolve(resourceName);
 	}
 
 	private synchronized static void ensureFilesystem() {
@@ -52,6 +66,8 @@ public class YgoprodeckFilesResources {
 					Paths.get(YGOPRODECK_FILES_URI);
 				} catch (FileSystemNotFoundException e) {
 					// if this happens, we are getting it from the zipfs
+					// IMPORTANT: we should call this method and
+					// do not close the filesystem to allow the files to be accessed
 					FileSystem zipfs = FileSystems.newFileSystem(
 							YGOPRODECK_FILES_URI,
 							Collections.singletonMap("create", "true"));
@@ -61,6 +77,5 @@ public class YgoprodeckFilesResources {
 			throw new IllegalStateException("Cannot get filesystem");
 		}
 	}
-
 
 }

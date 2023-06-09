@@ -10,11 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>ygoprodeck-model</module>
-        <module>ygoprodeck-utils</module>
+        <module>ygoprodeck-api</module>
         <module>ygoprodeck-testutils</module>
-        <module>ygoprodeck-retrofit</module>
-        <module>ygoprodeck-feign</module>
+        <module>ygoprodeck-client</module>
     </modules>
 
     <properties>
@@ -35,12 +33,11 @@
         <!-- versions -->
         <lombok.version>1.18.26</lombok.version>
         <slf4j.version>2.0.6</slf4j.version>
-        <logback.version>1.4.5</logback.version>
-        <resilience4j.version>2.0.0</resilience4j.version>
+        <logback.version>1.4.7</logback.version>
+        <resilience4j.version>2.0.2</resilience4j.version>
         <jakarta-bom.version>10.0.0</jakarta-bom.version>
-        <jackson-bom.version>2.14.2</jackson-bom.version>
+        <jackson-bom.version>2.15.1</jackson-bom.version>
         <okhttp-bom.version>4.10.0</okhttp-bom.version>
-        <feign-bom.version>12.3</feign-bom.version>
         <retrofit2.version>2.9.0</retrofit2.version>
         <junit-bom.version>5.9.2</junit-bom.version>
     </properties>
@@ -78,13 +75,6 @@
                 <version>${okhttp-bom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>io.github.openfeign</groupId>
-                <artifactId>feign-bom</artifactId>
-                <version>${feign-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
