@@ -1,10 +1,8 @@
-package io.github.magicdgs.gaming.ygoprodeck.utils.okhttp;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal.okhttp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
-import io.github.magicdgs.gaming.ygoprodeck.utils.ClientBuilder;
 import okhttp3.OkHttpClient;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

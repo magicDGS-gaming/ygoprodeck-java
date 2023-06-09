@@ -1,4 +1,4 @@
-package io.github.magicdgs.gaming.ygoprodeck.utils.okhttp;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal.okhttp;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Interceptor;

@@ -1,4 +1,4 @@
-package io.github.magicdgs.gaming.ygoprodeck.utils;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal;
 
 import io.github.magicdgs.gaming.ygoprodeck.Constants;
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;

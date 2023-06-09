@@ -1,7 +1,8 @@
-package io.github.magicdgs.gaming.ygoprodeck.utils;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +40,7 @@ class ClientBuilderTest {
 
     @Test
     public void testNotFailedWithDefaultUrls() {
-        assertDoesNotThrow(() -> testBuilder.defaultUrls().build());
+        Assertions.assertDoesNotThrow(() -> testBuilder.defaultUrls().build());
     }
 
 }

@@ -1,4 +1,4 @@
-package io.github.magicdgs.gaming.ygoprodeck.utils.okhttp;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal.okhttp;
 
 import io.github.resilience4j.ratelimiter.RateLimiter;
 import io.github.resilience4j.ratelimiter.RateLimiterConfig;

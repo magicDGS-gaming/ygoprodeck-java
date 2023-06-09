@@ -1,18 +1,16 @@
-package io.github.magicdgs.gaming.ygoprodeck.utils.okhttp;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal.okhttp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.magicdgs.gaming.ygoprodeck.Constants;
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
 import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
-import io.github.magicdgs.gaming.ygoprodeck.utils.ClientBuilder;
-import io.github.magicdgs.gaming.ygoprodeck.utils.okhttp.RateLimitBlockingInterceptor;
+import io.github.magicdgs.gaming.ygoprodeck.client.internal.ClientBuilder;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.Duration;
-import java.util.List;
 
 public abstract class OkhttpClientBuilder<T> extends ClientBuilder<T> {
 
