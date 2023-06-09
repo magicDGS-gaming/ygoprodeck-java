@@ -1,4 +1,4 @@
-package io.github.magicdgs.gaming.ygoprodeck.api.retrofit;
+package io.github.magicdgs.gaming.ygoprodeck.client;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
@@ -15,7 +15,7 @@ import retrofit2.Response;
  *
  * @param <T> the expected result type of the callback
  */
-public final class YgoprodeckApiResultCallback<T> implements Callback<T> {
+public final class YgoprodeckResultCallback<T> implements Callback<T> {
 
 	private final CountDownLatch countdown = new CountDownLatch(1);
 	

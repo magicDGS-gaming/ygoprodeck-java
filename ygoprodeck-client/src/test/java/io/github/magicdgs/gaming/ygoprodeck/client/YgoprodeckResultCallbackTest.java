@@ -1,8 +1,9 @@
-package io.github.magicdgs.gaming.ygoprodeck.api.retrofit;
+package io.github.magicdgs.gaming.ygoprodeck.client;
 
 import java.io.IOException;
 import java.util.Arrays;
 
+import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckExceptionCallAdapterFactory;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi.TestResponse;
 import org.junit.jupiter.api.AfterAll;
@@ -21,7 +22,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 @Slf4j
-public class YgoprodeckApiResultCallbackTest {
+public class YgoprodeckResultCallbackTest {
 
 	private static MockWebServer MOCK_SERVER;
 	
@@ -49,9 +50,9 @@ public class YgoprodeckApiResultCallbackTest {
 				.build().create(RetrofitTestApi.class);
 	}
 	
-	private YgoprodeckApiResultCallback<TestResponse> enqueueCallbackAndWait() throws Exception {
+	private YgoprodeckResultCallback<TestResponse> enqueueCallbackAndWait() throws Exception {
 		Call<TestResponse> responseCall = createApiWithCallAdapterFactory().test();
-		final YgoprodeckApiResultCallback<TestResponse> testCallback = new YgoprodeckApiResultCallback<>();
+		final YgoprodeckResultCallback<TestResponse> testCallback = new YgoprodeckResultCallback<>();
 		responseCall.enqueue(testCallback);
 		testCallback.awaitResult();
 		return testCallback;
@@ -64,7 +65,7 @@ public class YgoprodeckApiResultCallbackTest {
 				.build();
 		final String responseBody = JsonConverter.asJson(responseObject);
 		MOCK_SERVER.enqueue(new MockResponse().setResponseCode(200).setBody(responseBody));
-		YgoprodeckApiResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
+		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(
 				() -> Assertions.assertFalse(resultCallback.getError().isPresent(), () -> "Error should not be present: " + resultCallback.getError().get()),
 				() -> Assertions.assertTrue(resultCallback.getResponse().isPresent(), "Response should be present"),
@@ -76,7 +77,7 @@ public class YgoprodeckApiResultCallbackTest {
 	public void testErrorModelWhenUnknownModelReturn() throws Exception {
 		final String responseBody = JsonConverter.asJson(Arrays.asList("unknown"));
 		MOCK_SERVER.enqueue(new MockResponse().setResponseCode(200).setBody(responseBody));
-		YgoprodeckApiResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
+		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(
 				() -> Assertions.assertTrue(resultCallback.getError().isPresent()),
 				() -> Assertions.assertFalse(resultCallback.getResponse().isPresent()),
@@ -93,7 +94,7 @@ public class YgoprodeckApiResultCallbackTest {
 		errorObject.setError(expectedError);
 		final String responseBody = JsonConverter.asJson(errorObject);
 		MOCK_SERVER.enqueue(new MockResponse().setResponseCode(400).setBody(responseBody));
-		YgoprodeckApiResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
+		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(
 				() -> Assertions.assertTrue(resultCallback.getError().isPresent()),
 				() -> Assertions.assertFalse(resultCallback.getResponse().isPresent()),

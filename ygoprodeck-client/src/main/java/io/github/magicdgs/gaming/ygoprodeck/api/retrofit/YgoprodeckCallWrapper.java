@@ -3,6 +3,7 @@ package io.github.magicdgs.gaming.ygoprodeck.api.retrofit;
 import java.io.IOException;
 import java.util.concurrent.Executor;
 
+import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckResultCallback;
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckResponseErrorException;
 import lombok.AllArgsConstructor;
 import okhttp3.Request;
@@ -23,7 +24,7 @@ class YgoprodeckCallWrapper<T> implements Call<T> {
     
 	@Override
 	public Response<T> execute() throws IOException {
-		final YgoprodeckApiResultCallback<T> resultCallback = new YgoprodeckApiResultCallback<>();
+		final YgoprodeckResultCallback<T> resultCallback = new YgoprodeckResultCallback<>();
 		// do not use the callback executor
 		delegate.enqueue(new YgoprodeckExceptionCallback<>(callbackExecutor, resultCallback));
 		try {

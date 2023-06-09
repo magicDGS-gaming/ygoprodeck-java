@@ -1,6 +1,5 @@
 package io.github.magicdgs.gaming.ygoprodeck.client;
 
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckApiResultCallback;
 import io.github.magicdgs.gaming.ygoprodeck.model.*;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseClientTester;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +41,10 @@ public class RetrofitClientTester implements DatabaseClientTester {
         return call.execute().body();
     }
 
-    private static <T> YgoprodeckApiResultCallback<T> executeAsync(final Call<T> call,
-                                                            boolean expectedSuccess)
+    private static <T> YgoprodeckResultCallback<T> executeAsync(final Call<T> call,
+                                                                boolean expectedSuccess)
             throws Exception {
-        final var callback = new YgoprodeckApiResultCallback<T>();
+        final var callback = new YgoprodeckResultCallback<T>();
         call.enqueue(callback);
         callback.awaitResult();
         assertAll(
@@ -61,13 +60,13 @@ public class RetrofitClientTester implements DatabaseClientTester {
         return callback;
     }
 
-    public <T> YgoprodeckApiResultCallback<T> executeWithCallback(final Function<YgoprodeckClient, Call<T>> callFunction)
+    public <T> YgoprodeckResultCallback<T> executeWithCallback(final Function<YgoprodeckClient, Call<T>> callFunction)
             throws Exception {
         return executeWithCallback(callFunction, true);
     }
 
-    public <T> YgoprodeckApiResultCallback<T> executeWithCallback(final Function<YgoprodeckClient, Call<T>> callFunction,
-                                                                     boolean expectedSuccess)
+    public <T> YgoprodeckResultCallback<T> executeWithCallback(final Function<YgoprodeckClient, Call<T>> callFunction,
+                                                               boolean expectedSuccess)
             throws Exception {
         return executeAsync(callFunction.apply(client), expectedSuccess);
     }
