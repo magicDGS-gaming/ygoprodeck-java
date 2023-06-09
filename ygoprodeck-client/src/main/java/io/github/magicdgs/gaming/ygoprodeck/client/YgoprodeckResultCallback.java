@@ -4,8 +4,8 @@ import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckResponseErrorException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

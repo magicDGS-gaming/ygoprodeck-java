@@ -2,7 +2,7 @@ package io.github.magicdgs.gaming.ygoprodeck.client.internal.okhttp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.magicdgs.gaming.ygoprodeck.Constants;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import io.github.magicdgs.gaming.ygoprodeck.client.internal.ClientBuilder;
 import okhttp3.Interceptor;

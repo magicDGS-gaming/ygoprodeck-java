@@ -1,7 +1,6 @@
 package io.github.magicdgs.gaming.ygoprodeck.integrationtest;
 
 import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckClient;
-import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestClientFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ public class ProductionYgoprodeckClientParametersIT {
     public static void beforeAll() throws Exception {
         log.atDebug().log("Waiting 5 seconds to start the tests");
         TimeUnit.SECONDS.sleep(5);
-        TEST_CLIENT = RetrofitTestClientFactory.getProductionClient();
+        TEST_CLIENT = ProductionYgoprodeckClientInstance.getInstance();
     }
 
     @Test

@@ -1,9 +1,9 @@
 package io.github.magicdgs.gaming.ygProductionYgoprodeckClientParametersITprodeck.integrationtest;
 
-import io.github.magicdgs.gaming.ygoprodeck.client.RetrofitClientTester;
-import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseClientTester;
+import io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi;
+import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckClient;
+import io.github.magicdgs.gaming.ygoprodeck.integrationtest.ProductionYgoprodeckClientInstance;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseContractTestSpec;
-import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestClientFactory;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,33 +17,33 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 public class ProductionYgoprodeckClientContractIT extends DatabaseContractTestSpec {
 
-	private static RetrofitClientTester TEST_CLIENT;
+	private static YgoprodeckClient CLIENT;
+
+	@Override
+	protected DatabaseApi getDatabaseApi() {
+		return CLIENT.getDatabaseApi();
+	}
 
 	@BeforeAll
 	public static void beforeAll() throws Exception {
 		log.atDebug().log("Waiting 5 seconds to start the tests");
 		TimeUnit.SECONDS.sleep(5);
-		TEST_CLIENT = new RetrofitClientTester(RetrofitTestClientFactory.getProductionClient(), false);
-	}
-
-	@Override
-	protected DatabaseClientTester getClientTester() {
-		return TEST_CLIENT;
+		CLIENT = ProductionYgoprodeckClientInstance.getInstance();
 	}
 
 
 	@Test
 	public void testGetImage() throws Exception {
-		var resultCallback = TEST_CLIENT.executeWithCallback(client -> //
-				client.getImagesApi().getCardImage(6983839L));
-		assertImageResponse(resultCallback.getResponse().get());
+		var resultResponse = CLIENT.getImagesApi().getCardImage(6983839L)
+				.execute();
+		assertImageResponse(resultResponse);
 	}
 
 	@Test
 	public void testGetCardCroppedImage() throws Exception {
-		var resultCallback = TEST_CLIENT.executeWithCallback(client -> //
-				client.getImagesApi().getCardCroppedImage(27551L));
-		assertImageResponse(resultCallback.getResponse().get());
+		var resultResponse = CLIENT.getImagesApi().getCardCroppedImage(27551L)
+				.execute();
+		assertImageResponse(resultResponse);
 	}
 
 	private static void assertImageResponse(final Response<ResponseBody> response) {

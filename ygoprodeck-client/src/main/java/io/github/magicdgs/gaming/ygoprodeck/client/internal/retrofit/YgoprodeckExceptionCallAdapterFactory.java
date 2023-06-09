@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 
 /**
  * CallAdapter factory to be used by retrofit on this library.

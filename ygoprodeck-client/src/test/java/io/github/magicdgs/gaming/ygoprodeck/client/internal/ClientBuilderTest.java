@@ -1,6 +1,6 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal;
 
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

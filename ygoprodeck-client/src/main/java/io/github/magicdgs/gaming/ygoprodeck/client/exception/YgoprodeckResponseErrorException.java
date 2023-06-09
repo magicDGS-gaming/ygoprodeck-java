@@ -1,4 +1,4 @@
-package io.github.magicdgs.gaming.ygoprodeck.model.exception;
+package io.github.magicdgs.gaming.ygoprodeck.client.exception;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
 

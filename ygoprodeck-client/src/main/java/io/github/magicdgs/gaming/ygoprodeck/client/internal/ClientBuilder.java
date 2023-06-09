@@ -1,7 +1,7 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal;
 
 import io.github.magicdgs.gaming.ygoprodeck.Constants;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 

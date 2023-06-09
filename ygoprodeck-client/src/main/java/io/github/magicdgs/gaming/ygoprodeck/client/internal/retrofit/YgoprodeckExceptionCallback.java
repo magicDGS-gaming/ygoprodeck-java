@@ -3,8 +3,8 @@ package io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit;
 import java.util.concurrent.Executor;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckResponseErrorException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
 import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
