@@ -1,8 +1,8 @@
-package io.github.magicdgs.gaming.ygoprodeck.client.retrofit;
+package io.github.magicdgs.gaming.ygoprodeck.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.DatabaseApi;
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.ImagesApi;
+import io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi;
+import io.github.magicdgs.gaming.ygoprodeck.api.ImagesApi;
 import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckExceptionCallAdapterFactory;
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
 import io.github.magicdgs.gaming.ygoprodeck.utils.okhttp.OkhttpClientBuilder;
@@ -20,7 +20,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * This class is created with the {@link Builder} on this class.
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class YgoprodeckRetrofitClient {
+public class YgoprodeckClient {
 
     @Getter
     private final DatabaseApi databaseApi;
@@ -30,16 +30,16 @@ public class YgoprodeckRetrofitClient {
     /**
      * Builder for the API client.
      */
-    public static class Builder extends OkhttpClientBuilder<YgoprodeckRetrofitClient> {
+    public static class Builder extends OkhttpClientBuilder<YgoprodeckClient> {
 
         @Override
-        protected YgoprodeckRetrofitClient doBuildInstance(ObjectMapper objectMapper, OkHttpClient client) throws YgoprodeckException {
+        protected YgoprodeckClient doBuildInstance(ObjectMapper objectMapper, OkHttpClient client) throws YgoprodeckException {
             final Retrofit.Builder clientBuilder = new Retrofit.Builder()
                     .client(client)
                     .addCallAdapterFactory(YgoprodeckExceptionCallAdapterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(JacksonConverterFactory.create(objectMapper));
-            return new YgoprodeckRetrofitClient(
+            return new YgoprodeckClient(
                     clientBuilder.baseUrl(databaseUrl).build().create(DatabaseApi.class),
                     clientBuilder.baseUrl(imagesUrl).build().create(ImagesApi.class)
             );

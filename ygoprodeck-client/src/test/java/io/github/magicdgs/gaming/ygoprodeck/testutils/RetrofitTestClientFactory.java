@@ -1,20 +1,18 @@
 package io.github.magicdgs.gaming.ygoprodeck.testutils;
 
 import io.github.magicdgs.gaming.ygoprodeck.Constants;
-import io.github.magicdgs.gaming.ygoprodeck.client.retrofit.RetrofitClientTester;
-import io.github.magicdgs.gaming.ygoprodeck.client.retrofit.YgoprodeckRetrofitClient;
-import okhttp3.mockwebserver.MockWebServer;
+import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckClient;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 public class RetrofitTestClientFactory {
 
-    private static YgoprodeckRetrofitClient PROD_CLIENT;
+    private static YgoprodeckClient PROD_CLIENT;
 
-    public static YgoprodeckRetrofitClient getProductionClient() {
+    public static YgoprodeckClient getProductionClient() {
         if (PROD_CLIENT == null) {
-            PROD_CLIENT = new YgoprodeckRetrofitClient.Builder() //
+            PROD_CLIENT = new YgoprodeckClient.Builder() //
                     .strict(true) //
                     .rateLimit(Constants.DEFAULT_REQUEST_PER_SECOND, Duration.of(1, ChronoUnit.SECONDS))
                     .defaultUrls()
@@ -22,8 +20,8 @@ public class RetrofitTestClientFactory {
         }
         return PROD_CLIENT;
     }
-    public static YgoprodeckRetrofitClient createMockClient(final String mockServerUrl, final boolean strict) {
-        return new YgoprodeckRetrofitClient.Builder() //
+    public static YgoprodeckClient createMockClient(final String mockServerUrl, final boolean strict) {
+        return new YgoprodeckClient.Builder() //
                 .strict(strict) //
                 .rateLimit(Constants.MAX_REQUEST_PER_SECOND, Duration.of(1, ChronoUnit.SECONDS))
                 .commonUrl(mockServerUrl) //

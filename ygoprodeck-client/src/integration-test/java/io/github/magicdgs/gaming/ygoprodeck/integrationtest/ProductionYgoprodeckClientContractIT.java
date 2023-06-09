@@ -1,6 +1,6 @@
 package io.github.magicdgs.gaming.ygProductionYgoprodeckClientParametersITprodeck.integrationtest;
 
-import io.github.magicdgs.gaming.ygoprodeck.client.retrofit.RetrofitClientTester;
+import io.github.magicdgs.gaming.ygoprodeck.client.RetrofitClientTester;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseClientTester;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseContractTestSpec;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestClientFactory;

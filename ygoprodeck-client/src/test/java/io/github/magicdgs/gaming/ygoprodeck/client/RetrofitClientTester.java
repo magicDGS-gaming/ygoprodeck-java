@@ -1,7 +1,5 @@
-package io.github.magicdgs.gaming.ygoprodeck.client.retrofit;
+package io.github.magicdgs.gaming.ygoprodeck.client;
 
-import io.github.magicdgs.gaming.ygoprodeck.Constants;
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.DatabaseApi;
 import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckApiResultCallback;
 import io.github.magicdgs.gaming.ygoprodeck.model.*;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseClientTester;
@@ -17,7 +15,7 @@ import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*
 @RequiredArgsConstructor
 public class RetrofitClientTester implements DatabaseClientTester {
 
-    private final YgoprodeckRetrofitClient client;
+    private final YgoprodeckClient client;
     private final boolean useAsync;
 
     /**
@@ -63,23 +61,23 @@ public class RetrofitClientTester implements DatabaseClientTester {
         return callback;
     }
 
-    public <T> YgoprodeckApiResultCallback<T> executeWithCallback(final Function<YgoprodeckRetrofitClient, Call<T>> callFunction)
+    public <T> YgoprodeckApiResultCallback<T> executeWithCallback(final Function<YgoprodeckClient, Call<T>> callFunction)
             throws Exception {
         return executeWithCallback(callFunction, true);
     }
 
-    public <T> YgoprodeckApiResultCallback<T> executeWithCallback(final Function<YgoprodeckRetrofitClient, Call<T>> callFunction,
+    public <T> YgoprodeckApiResultCallback<T> executeWithCallback(final Function<YgoprodeckClient, Call<T>> callFunction,
                                                                      boolean expectedSuccess)
             throws Exception {
         return executeAsync(callFunction.apply(client), expectedSuccess);
     }
 
-    protected <T> T executeCall(final Function<YgoprodeckRetrofitClient, Call<T>> callFunction)
+    protected <T> T executeCall(final Function<YgoprodeckClient, Call<T>> callFunction)
             throws Exception {
         return executeCall(callFunction, true);
     }
 
-    protected <T> T executeCall(final Function<YgoprodeckRetrofitClient, Call<T>> callFunction,
+    protected <T> T executeCall(final Function<YgoprodeckClient, Call<T>> callFunction,
                              boolean expectedSuccess)
             throws Exception {
         return useAsync

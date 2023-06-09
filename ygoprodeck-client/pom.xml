@@ -72,8 +72,8 @@
                             <!-- spec, templates and generator options -->
                             <inputSpec>${openapi-generator.inputSpec}</inputSpec>
                             <packageName>${openapi-generator.basePackage}</packageName>
-                            <apiPackage>${openapi-generator.apiPackage}.retrofit</apiPackage>
-                            <invokerPackage>${openapi-generator.basePackage}.retrofit</invokerPackage>
+                            <apiPackage>${openapi-generator.apiPackage}</apiPackage>
+                            <invokerPackage>${openapi-generator.basePackage}</invokerPackage>
                             <modelPackage>${openapi-generator.modelPackage}</modelPackage>
                             <templateDirectory>openapi-template</templateDirectory>
                             <generatorName>java</generatorName>

@@ -1,7 +1,6 @@
 package io.github.magicdgs.gaming.ygoprodeck.integrationtest;
 
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.DatabaseApi;
-import io.github.magicdgs.gaming.ygoprodeck.client.retrofit.YgoprodeckRetrofitClient;
+import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckClient;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestClientFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,7 +15,7 @@ import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*
 @Slf4j
 public class ProductionYgoprodeckClientParametersIT {
 
-    private static YgoprodeckRetrofitClient TEST_CLIENT;
+    private static YgoprodeckClient TEST_CLIENT;
 
     @BeforeAll
     public static void beforeAll() throws Exception {

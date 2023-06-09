@@ -1,18 +1,17 @@
-package io.github.magicdgs.gaming.ygoprodeck.client.retrofit;
+package io.github.magicdgs.gaming.ygoprodeck.client;
 
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseClientTester;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseContractTestSpec;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.ResourceMockServerClientTester;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestClientFactory;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 
 @Slf4j
-abstract class AbstractMockYgoprodeckRetrofitClientTest extends DatabaseContractTestSpec  {
+abstract class AbstractMockYgoprodeckClientTest extends DatabaseContractTestSpec  {
 
     private static ResourceMockServerClientTester MOCK_TESTER;
 
