@@ -60,7 +60,14 @@ public final class YgoprodeckResultCallback<T> implements Callback<T> {
 		return Optional.ofNullable(response);
 	}
 
-	// TODO: document and add tests
+	/**
+	 * Gets the original failure (if any) from the client call.
+	 * </br>
+	 * NOTE: the failure might be empty if the callback was not yet executed
+	 * or if a successful answer have occurred.
+	 *
+	 * @return optional error; {@code Optional#empty()} if none.
+	 */
 	public Optional<Throwable> getFailure() {
 		return Optional.ofNullable(failure);
 	}

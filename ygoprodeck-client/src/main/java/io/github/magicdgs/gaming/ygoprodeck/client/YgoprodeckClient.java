@@ -15,9 +15,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
- * Retrofit client for the YGOProDeck API containing the different APIs to be used.
+ * Entrypoint for the client of the YGOProDeck API containing the different APIs to be used.
  * </br>
- * This class is created with the {@link Builder} on this class.
+ * This class is created with its own {@link Builder}.
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class YgoprodeckClient {

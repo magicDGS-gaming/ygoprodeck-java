@@ -34,10 +34,10 @@ public class YgoprodeckResultCallbackTest {
 	static void afterAll() {
 		try {
 			MOCK_SERVER.close();
-			MOCK_SERVER = null;
 		} catch (final IOException e) {
 			log.error("Error closing mock-server", e);
 		}
+		MOCK_SERVER = null;
 	}
 	
 	private RetrofitTestApi createApiWithCallAdapterFactory() {
@@ -66,9 +66,14 @@ public class YgoprodeckResultCallbackTest {
 		MOCK_SERVER.enqueue(new MockResponse().setResponseCode(200).setBody(responseBody));
 		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(
-				() -> Assertions.assertFalse(resultCallback.getError().isPresent(), () -> "Error should not be present: " + resultCallback.getError().get()),
-				() -> Assertions.assertTrue(resultCallback.getResponse().isPresent(), "Response should be present"),
-				() -> Assertions.assertTrue(resultCallback.getResult().isPresent(), "Result should be present")
+				() -> Assertions.assertFalse(resultCallback.getError().isPresent(),
+						() -> "Error should not be present: " + resultCallback.getError().get()),
+				() -> Assertions.assertFalse(resultCallback.getFailure().isPresent(),
+						() -> "Failure should not be present: " + resultCallback.getFailure().get()),
+				() -> Assertions.assertTrue(resultCallback.getResponse().isPresent(),
+						"Response should be present"),
+				() -> Assertions.assertTrue(resultCallback.getResult().isPresent(),
+						"Result should be present")
 		);
 	}
 	
@@ -79,6 +84,7 @@ public class YgoprodeckResultCallbackTest {
 		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(
 				() -> Assertions.assertTrue(resultCallback.getError().isPresent()),
+				() -> Assertions.assertTrue(resultCallback.getFailure().isPresent()),
 				() -> Assertions.assertFalse(resultCallback.getResponse().isPresent()),
 				() -> Assertions.assertFalse(resultCallback.getResult().isPresent())
 		);
@@ -96,6 +102,7 @@ public class YgoprodeckResultCallbackTest {
 		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(
 				() -> Assertions.assertTrue(resultCallback.getError().isPresent()),
+				() -> Assertions.assertTrue(resultCallback.getFailure().isPresent()),
 				() -> Assertions.assertFalse(resultCallback.getResponse().isPresent()),
 				() -> Assertions.assertFalse(resultCallback.getResult().isPresent())
 		);
