@@ -4,7 +4,7 @@ import java.net.URI;
 import java.nio.file.*;
 import java.util.Collections;
 
-import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
 public class YgoprodeckFilesResources {
 
@@ -39,8 +39,7 @@ public class YgoprodeckFilesResources {
 
 	public static Path getResource(final String resourceName) {
 		ensureFilesystem();
-		final String sanitized = resourceName.replaceFirst("/", "");
-		return Paths.get(YGOPRODECK_FILES_URI).resolve(sanitized);
+		return Paths.get(YGOPRODECK_FILES_URI).resolve(resourceName);
 	}
 
 	private synchronized static void ensureFilesystem() {

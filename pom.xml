@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>ygoprodeck-model</module>
+        <module>ygoprodeck-api</module>
         <module>ygoprodeck-testutils</module>
         <module>ygoprodeck-client</module>
     </modules>

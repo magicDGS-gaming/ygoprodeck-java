@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
 @Slf4j
 public class ProductionYgoprodeckClientParametersIT {
@@ -26,7 +26,7 @@ public class ProductionYgoprodeckClientParametersIT {
 
     @Test
     public void testGetCardinfoWithDateParams() throws Exception {
-        var query = new GetCardInfoQueryParams() //
+        var query = new GetCardInfoQueryMap() //
                 .startdate(LocalDate.of(2000, 1, 1))//
                 .enddate(LocalDate.of(2004, 1, 1)) //
                 // limit the output not to stress the API

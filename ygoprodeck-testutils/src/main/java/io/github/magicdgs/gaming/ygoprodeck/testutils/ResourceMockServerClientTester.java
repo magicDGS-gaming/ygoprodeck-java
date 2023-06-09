@@ -1,18 +1,14 @@
 package io.github.magicdgs.gaming.ygoprodeck.testutils;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.*;
-import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
-import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Function;
 
-import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
 public final class ResourceMockServerClientTester implements DatabaseClientTester, Closeable {
 
@@ -41,7 +37,7 @@ public final class ResourceMockServerClientTester implements DatabaseClientTeste
     }
 
     @Override
-    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryParams params) throws Exception {
+    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryMap params) throws Exception {
         return delegate.callGetCardSetInfo(params);
     }
 
@@ -51,22 +47,22 @@ public final class ResourceMockServerClientTester implements DatabaseClientTeste
     }
 
     @Override
-    public CardInfoDTO callGetCardInfo(GetCardInfoQueryParams params) throws Exception {
+    public CardInfoDTO callGetCardInfo(GetCardInfoQueryMap params) throws Exception {
         return delegate.callGetCardInfo(params);
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryParams params) throws Exception {
+    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryMap params) throws Exception {
         return delegate.callGetCardInfoWithMiscParam(params);
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryParams params) throws Exception {
+    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryMap params) throws Exception {
         return delegate.callGetCardInfoWithPagination(params);
     }
 
     @Override
-    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryParams params) throws Exception {
+    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryMap params) throws Exception {
         delegate.callGetCardInfoWithWrongTypeParam(params);
     }
 

@@ -3,30 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.github.magicdgs.gaming</groupId>
         <artifactId>ygoprodeck-java-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ygoprodeck-model</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>ygoprodeck-api</artifactId>
 
     <properties>
-        <!-- this should be overriden on children -->
         <openapi-submodule.dir>${project.basedir}/../openapi</openapi-submodule.dir>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-            <scope>provided</scope>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
         </dependency>
         <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -42,7 +38,6 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
-        <!-- test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -75,10 +70,9 @@
                             <!-- spec, templates and generator options -->
                             <inputSpec>${openapi-generator.inputSpec}</inputSpec>
                             <modelPackage>${openapi-generator.modelPackage}</modelPackage>
-                            <apiPackage>${openapi-generator.basePackage}.utils</apiPackage>
+                            <apiPackage>${openapi-generator.apiPackage}</apiPackage>
                             <invokerPackage>${openapi-generator.basePackage}.utils</invokerPackage>
-                            <apiNameSuffix>ApiQueryUtils</apiNameSuffix>
-                            <templateDirectory>openapi-template</templateDirectory>
+                            <templateDirectory>openapi-template/model</templateDirectory>
                             <generatorName>java</generatorName>
                             <configOptions>
                                 <library>feign</library>
@@ -89,9 +83,40 @@
                             <!-- generate models, api and some supporting files -->
                             <supportingFilesToGenerate>EncodingUtils.java</supportingFilesToGenerate>
                             <generateModelTests>false</generateModelTests>
-                            <generateApiTests>false</generateApiTests>
+                            <generateApis>false</generateApis>
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateModelDocumentation>false</generateModelDocumentation>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-client</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- spec, templates and generator options -->
+                            <inputSpec>${openapi-generator.inputSpec}</inputSpec>
+                            <packageName>${openapi-generator.basePackage}</packageName>
+                            <apiPackage>${openapi-generator.apiPackage}</apiPackage>
+                            <invokerPackage>${openapi-generator.basePackage}.utils</invokerPackage>
+                            <modelPackage>${openapi-generator.modelPackage}</modelPackage>
+                            <templateDirectory>openapi-template/api</templateDirectory>
+                            <generatorName>java</generatorName>
+                            <configOptions>
+                                <library>retrofit2</library>
+                                <openApiNullable>${openapi-generator.openApiNullable}</openApiNullable>
+                                <useJakartaEe>${openapi-generator.useJakartaEe}</useJakartaEe>
+                                <dateLibrary>${openapi-generator.dateLibrary}</dateLibrary>
+                            </configOptions>
+                            <generateAliasAsModel>${openapi-generator.generateAliasAsModel}</generateAliasAsModel>
+                            <!-- generate only apis-->
+                            <generateApis>true</generateApis>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModels>false</generateModels>
+                            <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateApiDocumentation>false</generateApiDocumentation>
                         </configuration>
                     </execution>
                 </executions>
@@ -113,9 +138,43 @@
                             </sources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>add-integration-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/integration-test/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>integration-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

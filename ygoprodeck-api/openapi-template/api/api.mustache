@@ -1,6 +1,6 @@
 package {{package}};
 
-import static {{packageName}}.utils.{{classname}}QueryUtils.*;
+import {{invokerPackage}}.EncodingUtils;
 
 {{#useRxJava2}}
 import io.reactivex.Observable;
@@ -40,6 +40,37 @@ import java.util.Set;
 {{#operations}}
 public interface {{classname}} {
   {{#operation}}
+  public static final String {{#lambda.uppercase}}{{operationIdSnakeCase}}{{/lambda.uppercase}}_PATH = "{{{path}}}";
+  {{#hasQueryParams}}
+
+      /**
+      * A convenience class for generating query parameters for the
+      * <code>{{operationId}}</code> method in a fluent style.
+      */
+      public static class {{operationIdCamelCase}}QueryMap extends HashMap<String, Object> {
+      {{#queryParams}}
+          public static final String {{#lambda.uppercase}}{{paramName}}{{/lambda.uppercase}} = "{{baseName}}";
+      {{/queryParams}}
+      {{#queryParams}}
+
+          /**
+          * Set the {{paramName}} query parameter.
+          *
+          * @param value {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}
+          */
+          public {{operationIdCamelCase}}QueryMap {{paramName}}(final {{{dataType}}} value) {
+          {{#collectionFormat}}
+              put({{#lambda.uppercase}}{{paramName}}{{/lambda.uppercase}}, EncodingUtils.encodeCollection(value, "{{collectionFormat}}"));
+          {{/collectionFormat}}
+          {{^collectionFormat}}
+              put({{#lambda.uppercase}}{{paramName}}{{/lambda.uppercase}}, EncodingUtils.encode(value));
+          {{/collectionFormat}}
+              return this;
+          }
+      {{/queryParams}}
+      }
+
+  {{/hasQueryParams}}
   /**
    * {{summary}}
    * {{notes}}
@@ -80,7 +111,7 @@ public interface {{classname}} {
   {{/hasQueryParams}}
   {{#hasQueryParams}}
   {{^doNotUseRx}}{{#useRxJava2}}{{#returnType}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava2}}{{#useRxJava3}}{{#returnType}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava3}}{{/doNotUseRx}}{{#doNotUseRx}}Call<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Void{{/returnType}}{{/isResponseFile}}>{{/doNotUseRx}} {{operationId}}(
-    {{#allParams}}{{^isQueryParam}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}},{{/isQueryParam}}{{/allParams}}@retrofit2.http.QueryMap {{operationIdCamelCase}}QueryParams queryParams
+    {{#allParams}}{{^isQueryParam}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}},{{/isQueryParam}}{{/allParams}}@retrofit2.http.QueryMap {{operationIdCamelCase}}QueryMap queryParams
   );
   {{/hasQueryParams}}
   

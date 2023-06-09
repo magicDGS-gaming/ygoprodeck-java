@@ -30,7 +30,7 @@ public class JsonConverter {
 	private static SimpleModule getYgoprodeckModule() {
 		if (YGOPRODECK_MODULE == null) {
 			final DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			YGOPRODECK_MODULE = new SimpleModule("ygoprodeck") //
+			YGOPRODECK_MODULE = new SimpleModule("io/github/magicdgs/gaming/ygoprodeck") //
 					.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(formatter)) //
 					.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(formatter));
 		}

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
 @RequiredArgsConstructor
 public class RetrofitClientTester implements DatabaseClientTester {
@@ -100,7 +100,7 @@ public class RetrofitClientTester implements DatabaseClientTester {
     }
 
     @Override
-    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryParams params) throws Exception {
+    public CardSetInfo callGetCardSetInfo(GetCardSetInfoQueryMap params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardSetInfo(params));
     }
 
@@ -110,22 +110,22 @@ public class RetrofitClientTester implements DatabaseClientTester {
     }
 
     @Override
-    public CardInfoDTO callGetCardInfo(GetCardInfoQueryParams params) throws Exception {
+    public CardInfoDTO callGetCardInfo(GetCardInfoQueryMap params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardInfo(params));
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryParams params) throws Exception {
+    public CardInfoDTO callGetCardInfoWithMiscParam(GetCardInfoQueryMap params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardInfo(params));
     }
 
     @Override
-    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryParams params) throws Exception {
+    public CardInfoDTO callGetCardInfoWithPagination(GetCardInfoQueryMap params) throws Exception {
         return executeCall(client -> client.getDatabaseApi().getCardInfo(params));
     }
 
     @Override
-    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryParams params) throws Exception {
+    public void callGetCardInfoWithWrongTypeParam(GetCardInfoQueryMap params) throws Exception {
         executeCall(client -> client.getDatabaseApi().getCardInfo(params), false);
     }
 }

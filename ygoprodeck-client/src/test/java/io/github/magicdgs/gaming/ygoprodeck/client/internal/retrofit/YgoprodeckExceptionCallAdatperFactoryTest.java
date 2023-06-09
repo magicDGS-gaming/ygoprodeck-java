@@ -11,7 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.*;
-import io.github.magicdgs.gaming.ygoprodeck.model.exception.*;
+import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckResponseErrorException;
 import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.mockwebserver.MockResponse;

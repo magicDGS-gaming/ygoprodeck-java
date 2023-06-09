@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 import static io.github.magicdgs.gaming.ygoprodeck.testutils.YgoprodeckFilesResources.*;
 
 /**
@@ -45,7 +45,7 @@ public class YgoprodeckMockServerFactory {
         public MockResponse dispatch(@NotNull RecordedRequest recordedRequest) throws InterruptedException {
             // TODO: check if this includes parameters
             final HttpUrl requestUrl = recordedRequest.getRequestUrl();
-            switch (requestUrl.encodedPath()) {
+            switch (requestUrl.pathSegments().get(0)) {
                 case GET_CARD_INFO_PATH:
                     return cardInfoResponse(requestUrl);
                 case GET_CHECK_DB_VER_PATH:
@@ -70,20 +70,20 @@ public class YgoprodeckMockServerFactory {
             }
             // misc param -> all cards with misc mock
             if (url.querySize() == 1
-                    && checkParamValue(url, GetCardInfoQueryParams.MISC, YesSwitch.YES)
+                    && checkParamValue(url, GetCardInfoQueryMap.MISC, YesSwitch.YES)
             ) {
                 return createMockResponseFromResource(CARDINFO_MISC_RESOURCE, 200);
             }
             // num + offset -> paginated mock
             if (url.querySize() == 2
-                    && checkParamValue(url, GetCardInfoQueryParams.NUM, CARDINFO_PAGINATED_NUM_PARAM)
-                    && checkParamValue(url, GetCardInfoQueryParams.OFFSET, CARDINFO_PAGINATED_OFFSET_PARAM)
+                    && checkParamValue(url, GetCardInfoQueryMap.NUM, CARDINFO_PAGINATED_NUM_PARAM)
+                    && checkParamValue(url, GetCardInfoQueryMap.OFFSET, CARDINFO_PAGINATED_OFFSET_PARAM)
             ) {
                 return createMockResponseFromResource(CARDINFO_PAGINATED_RESOURCE, 200);
             }
             // type=wrong -> type error mock
             if (url.querySize() == 1
-                    && checkParamValue(url, GetCardInfoQueryParams.TYPE, CARDINFO_TYPE_ERROR_PARAM)
+                    && checkParamValue(url, GetCardInfoQueryMap.TYPE, CARDINFO_TYPE_ERROR_PARAM)
             ) {
                 return createMockResponseFromResource(CARDINFO_TYPE_ERROR_RESOURCE, 400);
             }
@@ -101,7 +101,7 @@ public class YgoprodeckMockServerFactory {
         private MockResponse cardSetInfoResponse(final HttpUrl url) {
             // setcod=valid -> set code mock
             if (url.querySize() == 1
-                    && checkParamValue(url, GetCardSetInfoQueryParams.SETCODE, CARDSETINFO_SETCODE_PARAM)
+                    && checkParamValue(url, GetCardSetInfoQueryMap.SETCODE, CARDSETINFO_SETCODE_PARAM)
             ) {
                 return createMockResponseFromResource(CARDSETINFO_SETCODE_RESOURCE, 200);
             }

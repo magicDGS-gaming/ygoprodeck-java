@@ -11,12 +11,13 @@ import lombok.AllArgsConstructor;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
+import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
 
 /**
  * CallAdapter factory to be used by retrofit on this library.
  * </br>
  * This CallAdapter factory ensures that API errors are properly thrown as
- * {@link io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException}s
+ * {@link YgoprodeckException}s
  * if they are known by the library. 
  */
 public class YgoprodeckExceptionCallAdapterFactory extends CallAdapter.Factory {
