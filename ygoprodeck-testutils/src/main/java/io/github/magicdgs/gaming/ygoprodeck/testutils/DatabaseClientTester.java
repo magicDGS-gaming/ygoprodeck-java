@@ -2,6 +2,7 @@ package io.github.magicdgs.gaming.ygoprodeck.testutils;
 
 import io.github.magicdgs.gaming.ygoprodeck.model.*;
 
+import java.io.Closeable;
 import java.util.List;
 
 import static io.github.magicdgs.gaming.ygoprodeck.utils.DatabaseApiQueryUtils.*;

@@ -19,6 +19,9 @@ public final class {{classname}} {
         // cannot be instantiated
     }
 
+{{#operations}}{{#operation}}    public static final String {{#lambda.uppercase}}{{operationIdSnakeCase}}{{/lambda.uppercase}}_PATH = "{{{path}}}";
+{{/operation}}{{/operations}}
+
 {{#operations}}{{#operation}}
 
     {{#hasQueryParams}}
@@ -28,6 +31,9 @@ public final class {{classname}} {
     */
     public static class {{operationIdCamelCase}}QueryParams extends HashMap<String, Object> {
         {{#queryParams}}
+        public static final String {{#lambda.uppercase}}{{paramName}}{{/lambda.uppercase}} = "{{baseName}}";
+        {{/queryParams}}
+        {{#queryParams}}
 
         /**
         * Set the {{paramName}} query parameter.
@@ -36,15 +42,15 @@ public final class {{classname}} {
         */
         public {{operationIdCamelCase}}QueryParams {{paramName}}(final {{{dataType}}} value) {
         {{#collectionFormat}}
-            put("{{baseName}}", EncodingUtils.encodeCollection(value, "{{collectionFormat}}"));
+            put({{#lambda.uppercase}}{{paramName}}{{/lambda.uppercase}}, EncodingUtils.encodeCollection(value, "{{collectionFormat}}"));
         {{/collectionFormat}}
         {{^collectionFormat}}
-            put("{{baseName}}", EncodingUtils.encode(value));
+            put({{#lambda.uppercase}}{{paramName}}{{/lambda.uppercase}}, EncodingUtils.encode(value));
         {{/collectionFormat}}
             return this;
         }
         {{/queryParams}}
-        }
+    }
         {{/hasQueryParams}}
 {{/operation}}{{/operations}}
 }

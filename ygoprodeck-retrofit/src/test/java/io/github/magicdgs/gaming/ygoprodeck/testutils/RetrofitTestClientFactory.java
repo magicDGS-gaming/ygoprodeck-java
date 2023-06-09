@@ -22,12 +22,11 @@ public class RetrofitTestClientFactory {
         }
         return PROD_CLIENT;
     }
-    public static YgoprodeckRetrofitClient createMockClient(final MockWebServer mockServer,
-                                                        final boolean strict) {
+    public static YgoprodeckRetrofitClient createMockClient(final String mockServerUrl, final boolean strict) {
         return new YgoprodeckRetrofitClient.Builder() //
                 .strict(strict) //
                 .rateLimit(Constants.MAX_REQUEST_PER_SECOND, Duration.of(1, ChronoUnit.SECONDS))
-                .commonUrl(mockServer.url("/").toString()) //
+                .commonUrl(mockServerUrl) //
                 .build();
     }
 

@@ -14,33 +14,30 @@ import java.io.IOException;
 @Slf4j
 abstract class AbstractMockYgoprodeckRetrofitClientTest extends DatabaseContractTestSpec  {
 
-    private static MockWebServer MOCK_SERVER;
-    private static DatabaseClientTester MOCK_TESTER;
+    private static ResourceMockServerClientTester MOCK_TESTER;
 
     protected abstract boolean isAsync();
 
     @BeforeEach
     public void beforeEach() {
-        if (MOCK_SERVER == null) {
-            MOCK_SERVER = new MockWebServer();
+        if (MOCK_TESTER == null) {
             // TODO: change for lenient if we extract model tests somewhere else
-            final RetrofitClientTester delegate = new RetrofitClientTester(
-                    RetrofitTestClientFactory.createMockClient(MOCK_SERVER, true),
+            MOCK_TESTER = new ResourceMockServerClientTester(mockServerUrl -> new RetrofitClientTester(
+                    // TODO: change for lenient if we extract model tests somewhere else
+                    RetrofitTestClientFactory.createMockClient(mockServerUrl, true),
                     isAsync()
-            );
-            MOCK_TESTER = new ResourceMockServerClientTester(MOCK_SERVER, delegate);
+            ));
         }
     }
 
     @AfterAll
     public static void afterAll() {
-        if (MOCK_SERVER != null) {
+        if (MOCK_TESTER != null) {
             try {
-                MOCK_SERVER.close();
+                MOCK_TESTER.close();
             } catch (final IOException e) {
                 log.error("Error closing mock server", e);
             }
-            MOCK_SERVER = null;
             MOCK_TESTER = null;
         }
     }
