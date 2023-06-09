@@ -28,7 +28,7 @@ public class YgoprodeckMockServerFactory {
      * resources on {@link  YgoprodeckFilesResources} on the paths
      * that should provide them.
      *
-     * @return mocked web server
+     * @return mocked web server.
      */
     public static MockWebServer createMockWebServer() {
         final MockWebServer webServer = new MockWebServer();
@@ -43,7 +43,6 @@ public class YgoprodeckMockServerFactory {
         @NotNull
         @Override
         public MockResponse dispatch(@NotNull RecordedRequest recordedRequest) throws InterruptedException {
-            // TODO: check if this includes parameters
             final HttpUrl requestUrl = recordedRequest.getRequestUrl();
             return switch (requestUrl.pathSegments().get(0)) {
                 case GET_CARD_INFO_PATH -> cardInfoResponse(requestUrl);

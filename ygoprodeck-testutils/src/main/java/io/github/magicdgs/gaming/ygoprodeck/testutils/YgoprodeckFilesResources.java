@@ -6,6 +6,14 @@ import java.util.Collections;
 
 import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
+/**
+ * Test resources to return from mock servers or load.
+ * </br>
+ * Those resources are bundled on the test-utils and can be loaded with {@link #getResource(String)},
+ * where the resource name are the constants on this class.
+ * </br>
+ * To use directly with a mock-server, please use {@link YgoprodeckMockServerFactory#createMockWebServer()}.
+ */
 public class YgoprodeckFilesResources {
 
 	private static URI YGOPRODECK_FILES_URI = null;
@@ -37,6 +45,13 @@ public class YgoprodeckFilesResources {
 	// DOMAIN ENDPOINTS
 	public static final String ARCHETYPES_RESOURCE = "archetypes.php.json";
 
+	/**
+	 * Gets the resource path to load the information.
+	 *
+	 * @param resourceName name of the resource.
+	 *
+	 * @return path to the resource.
+	 */
 	public static Path getResource(final String resourceName) {
 		ensureFilesystem();
 		return Paths.get(YGOPRODECK_FILES_URI).resolve(resourceName);
@@ -62,6 +77,5 @@ public class YgoprodeckFilesResources {
 			throw new IllegalStateException("Cannot get filesystem");
 		}
 	}
-
 
 }
