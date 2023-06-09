@@ -1,11 +1,11 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal;
 
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ClientBuilderTest {
 
@@ -13,10 +13,10 @@ class ClientBuilderTest {
 
     @BeforeEach
     void beforeEach() {
-        testBuilder = new ClientBuilder<String>() {
+        testBuilder = new ClientBuilder<>() {
             @Override
             protected String buildInstance() throws YgoprodeckException {
-                return "Built: " + this.toString();
+                return "Built: " + this;
             }
         };
     }

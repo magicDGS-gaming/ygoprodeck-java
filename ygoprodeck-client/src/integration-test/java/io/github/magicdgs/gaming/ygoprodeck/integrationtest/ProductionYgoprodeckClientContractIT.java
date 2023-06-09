@@ -1,8 +1,7 @@
-package io.github.magicdgs.gaming.ygProductionYgoprodeckClientParametersITprodeck.integrationtest;
+package io.github.magicdgs.gaming.ygoprodeck.integrationtest;
 
 import io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi;
 import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckClient;
-import io.github.magicdgs.gaming.ygoprodeck.integrationtest.ProductionYgoprodeckClientInstance;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.DatabaseContractTestSpec;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;

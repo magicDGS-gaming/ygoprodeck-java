@@ -9,6 +9,7 @@ import okhttp3.Interceptor;
 import okhttp3.Protocol;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -26,8 +27,9 @@ public class RateLimitBlockingInterceptor implements Interceptor {
         rateLimiter = RateLimiterRegistry.of(config).rateLimiter(this.getClass().getName());
     }
 
+    @NotNull
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NotNull Chain chain) throws IOException {
         try {
             log.atDebug().setMessage(() -> String.format( //
                     "waiting for request: %s (available=%s;awaiting=%s)",

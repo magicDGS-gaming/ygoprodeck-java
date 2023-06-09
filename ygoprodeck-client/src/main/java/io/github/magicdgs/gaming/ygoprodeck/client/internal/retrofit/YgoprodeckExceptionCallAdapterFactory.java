@@ -1,17 +1,18 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit;
 
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
+import jakarta.annotation.Nullable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import retrofit2.Call;
+import retrofit2.CallAdapter;
+import retrofit2.Retrofit;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.concurrent.Executor;
-
-import jakarta.annotation.Nullable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import retrofit2.Call;
-import retrofit2.CallAdapter;
-import retrofit2.Retrofit;
-import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 
 /**
  * CallAdapter factory to be used by retrofit on this library.
@@ -27,7 +28,7 @@ public class YgoprodeckExceptionCallAdapterFactory extends CallAdapter.Factory {
     }
 
     @Override
-    public @Nullable CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    public @Nullable CallAdapter<?, ?> get(@NotNull Type returnType, @NotNull Annotation[] annotations, @NotNull Retrofit retrofit) {
       if (getRawType(returnType) != Call.class) {
         return null;
       }
@@ -38,21 +39,17 @@ public class YgoprodeckExceptionCallAdapterFactory extends CallAdapter.Factory {
       final Executor callbackExecutor = retrofit.callbackExecutor();
       return new ExceptionCallAdapter<>(responseType, callbackExecutor);
     }
-    
+
     @AllArgsConstructor(access = AccessLevel.PACKAGE)
-    private static final class ExceptionCallAdapter<R> implements CallAdapter<R, Call<R>> {
-      private final Type responseType;
-      private final Executor callbackExecutor;
+        private record ExceptionCallAdapter<R>(Type responseType,
+                                               Executor callbackExecutor)
+            implements CallAdapter<R, Call<R>> {
 
-      @Override
-      public Type responseType() {
-        return responseType;
-      }
-
-      @Override
-      public Call<R> adapt(Call<R> call) {
-        return new YgoprodeckCallWrapper<>(call, callbackExecutor);
-      }
-    }
+        @NotNull
+        @Override
+        public Call<R> adapt(@NotNull Call<R> call) {
+            return new YgoprodeckCallWrapper<>(call, callbackExecutor);
+        }
+        }
 	
 }

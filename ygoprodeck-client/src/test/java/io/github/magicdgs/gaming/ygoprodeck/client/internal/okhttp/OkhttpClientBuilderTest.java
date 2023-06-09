@@ -10,7 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OkhttpClientBuilderTest {
 
@@ -18,12 +19,12 @@ class OkhttpClientBuilderTest {
 
     @BeforeEach
     void beforeEach() {
-        testBuilder = new OkhttpClientBuilder<Object>() {
+        testBuilder = new OkhttpClientBuilder<>() {
             @Override
             protected Object doBuildInstance(ObjectMapper objectMapper,
                                              OkHttpClient client)
                     throws YgoprodeckException {
-                return "Built: " + this.toString();
+                return "Built: " + this;
             }
         };
     }

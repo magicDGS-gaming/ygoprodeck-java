@@ -1,17 +1,18 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit;
 
-import java.util.concurrent.Executor;
-
-import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
+import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
 import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import java.util.concurrent.Executor;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 class YgoprodeckExceptionCallback<T> implements Callback<T> {
@@ -19,7 +20,7 @@ class YgoprodeckExceptionCallback<T> implements Callback<T> {
     private final Callback<T> delegate;
 
 	@Override
-	public void onResponse(Call<T> call, Response<T> response) {
+	public void onResponse(@NotNull Call<T> call, Response<T> response) {
 		if (response.isSuccessful()) {
             execute(() -> delegate.onResponse(call, response));
         } else {
@@ -38,7 +39,7 @@ class YgoprodeckExceptionCallback<T> implements Callback<T> {
 	}
 	
 	@Override
-	public void onFailure(Call<T> call, Throwable t) {
+	public void onFailure(@NotNull Call<T> call, @NotNull Throwable t) {
         final YgoprodeckException finalException = new YgoprodeckException("Unexpected exception", t);
         execute(() -> delegate.onFailure(call, finalException));
 	}

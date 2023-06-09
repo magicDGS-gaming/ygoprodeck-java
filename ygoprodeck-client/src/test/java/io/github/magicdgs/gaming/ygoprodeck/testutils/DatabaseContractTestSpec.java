@@ -1,16 +1,17 @@
 package io.github.magicdgs.gaming.ygoprodeck.testutils;
 
 import io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi;
-import io.github.magicdgs.gaming.ygoprodeck.model.*;
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
+import io.github.magicdgs.gaming.ygoprodeck.model.YesSwitch;
 import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.GetCardInfoQueryMap;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.GetCardSetInfoQueryMap;
 import static org.junit.jupiter.api.Assertions.*;
-import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
 
 @Slf4j
 public abstract class DatabaseContractTestSpec {

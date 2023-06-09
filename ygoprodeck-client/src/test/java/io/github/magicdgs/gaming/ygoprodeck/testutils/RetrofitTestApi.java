@@ -16,7 +16,7 @@ public interface RetrofitTestApi {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@SuperBuilder
-	public static class TestResponse {
+	class TestResponse {
 		private String testName;
 		private int number;
 	}

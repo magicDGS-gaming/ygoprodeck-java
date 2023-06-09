@@ -1,9 +1,5 @@
 package io.github.magicdgs.gaming.ygoprodeck.model.json;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,9 +9,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Class with utility methods for JSON conversion.
@@ -63,7 +62,7 @@ public class JsonConverter {
 	/**
 	 * Converts the object into a JSON object with default settings.
 	 * 
-	 * @param object
+	 * @param json
 	 * 
 	 * @return json string
 	 */

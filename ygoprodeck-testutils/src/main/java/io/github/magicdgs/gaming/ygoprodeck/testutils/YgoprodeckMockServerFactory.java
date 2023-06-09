@@ -45,22 +45,15 @@ public class YgoprodeckMockServerFactory {
         public MockResponse dispatch(@NotNull RecordedRequest recordedRequest) throws InterruptedException {
             // TODO: check if this includes parameters
             final HttpUrl requestUrl = recordedRequest.getRequestUrl();
-            switch (requestUrl.pathSegments().get(0)) {
-                case GET_CARD_INFO_PATH:
-                    return cardInfoResponse(requestUrl);
-                case GET_CHECK_DB_VER_PATH:
-                    return createMockResponseFromResource(CHECKDBVER_RESOURCE, 200);
-                case GET_ARCHETYPES_PATH:
-                    return createMockResponseFromResource(ARCHETYPES_RESOURCE, 200);
-                case GET_CARD_SETS_PATH:
-                    return createMockResponseFromResource(CARDSETS_RESOURCE, 200);
-                case GET_CARD_SET_INFO_PATH:
-                    return cardSetInfoResponse(requestUrl);
-                case GET_RANDOM_CARD_PATH:
-                    return createMockResponseFromResource(RANDOMCARD_RESOURCE, 200);
-                default:
-                    throw new IllegalStateException("Request path is not mocked: " + requestUrl);
-            }
+            return switch (requestUrl.pathSegments().get(0)) {
+                case GET_CARD_INFO_PATH -> cardInfoResponse(requestUrl);
+                case GET_CHECK_DB_VER_PATH -> createMockResponseFromResource(CHECKDBVER_RESOURCE, 200);
+                case GET_ARCHETYPES_PATH -> createMockResponseFromResource(ARCHETYPES_RESOURCE, 200);
+                case GET_CARD_SETS_PATH -> createMockResponseFromResource(CARDSETS_RESOURCE, 200);
+                case GET_CARD_SET_INFO_PATH -> cardSetInfoResponse(requestUrl);
+                case GET_RANDOM_CARD_PATH -> createMockResponseFromResource(RANDOMCARD_RESOURCE, 200);
+                default -> throw new IllegalStateException("Request path is not mocked: " + requestUrl);
+            };
         }
 
         private MockResponse cardInfoResponse(final HttpUrl url) {
@@ -105,15 +98,16 @@ public class YgoprodeckMockServerFactory {
             ) {
                 return createMockResponseFromResource(CARDSETINFO_SETCODE_RESOURCE, 200);
             }
-            throw new IllegalStateException(GET_CARD_SET_INFO_PATH + " request is not mocked: " + url.toString());
+            throw new IllegalStateException(GET_CARD_SET_INFO_PATH + " request is not mocked: " + url);
         }
 
         public MockResponse createMockResponseFromResource(final String resourceName, final int responseCode) {
             final Path resourcePath = YgoprodeckFilesResources.getResource(resourceName);
             try {
                 final String resourceString = Files.readString(resourcePath);
-                final MockResponse mock = new MockResponse().setBody(resourceString).setResponseCode(responseCode);
-                return mock;
+                return new MockResponse()
+                        .setBody(resourceString)
+                        .setResponseCode(responseCode);
             } catch (IOException e) {
                 throw new IllegalStateException("Cannot read resource: " + resourcePath, e);
             }

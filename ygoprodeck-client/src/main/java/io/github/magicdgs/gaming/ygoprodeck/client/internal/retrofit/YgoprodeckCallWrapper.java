@@ -1,16 +1,17 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit;
 
-import java.io.IOException;
-import java.util.concurrent.Executor;
-
 import io.github.magicdgs.gaming.ygoprodeck.client.YgoprodeckResultCallback;
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
 import lombok.AllArgsConstructor;
 import okhttp3.Request;
 import okio.Timeout;
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.concurrent.Executor;
 
 @AllArgsConstructor
 class YgoprodeckCallWrapper<T> implements Call<T> {
@@ -18,10 +19,11 @@ class YgoprodeckCallWrapper<T> implements Call<T> {
     private final Executor callbackExecutor;
 
 	@Override
-	public void enqueue(Callback<T> callback) {
+	public void enqueue(@NotNull Callback<T> callback) {
 		delegate.enqueue(new YgoprodeckExceptionCallback<>(callbackExecutor, callback));
 	}
     
+	@NotNull
 	@Override
 	public Response<T> execute() throws IOException {
 		final YgoprodeckResultCallback<T> resultCallback = new YgoprodeckResultCallback<>();
@@ -51,17 +53,20 @@ class YgoprodeckCallWrapper<T> implements Call<T> {
 		return delegate.isCanceled();
 	}
 
+	@NotNull
 	@Override
 	public Request request() {
 		return delegate.request();
 	}
 
+	@NotNull
 	@Override
 	public Timeout timeout() {
 		return delegate.timeout();
 	}
 	
-    @SuppressWarnings("CloneDoesntCallSuperClone") // Performing deep clone.
+    @NotNull
+	@SuppressWarnings("CloneDoesntCallSuperClone") // Performing deep clone.
     @Override
     public Call<T> clone() {
         return new YgoprodeckCallWrapper<>(delegate.clone(), callbackExecutor);

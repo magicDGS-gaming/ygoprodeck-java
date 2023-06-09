@@ -1,24 +1,23 @@
 package io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit;
 
-import java.io.IOException;
-import java.util.Arrays;
-
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
+import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
+import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
+import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi.TestResponse;
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import io.github.magicdgs.gaming.ygoprodeck.model.*;
-import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
-import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
-import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
-import lombok.extern.slf4j.Slf4j;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+
+import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 public class YgoprodeckExceptionCallAdatperFactoryTest {
@@ -58,13 +57,13 @@ public class YgoprodeckExceptionCallAdatperFactoryTest {
 		var response = createApiWithCallAdapterFactory().test().execute();
 		Assertions.assertAll(
 				() -> Assertions.assertTrue(response.isSuccessful()),
-				() -> Assertions.assertDoesNotThrow(() -> response.body())
+				() -> Assertions.assertDoesNotThrow(response::body)
 		);
 	}
 	
 	@Test
 	public void testExceptionOnExecuteWhenUnknownModel() throws Exception {
-		final String responseBody = JsonConverter.asJson(Arrays.asList("unknown"));
+		final String responseBody = JsonConverter.asJson(List.of("unknown"));
 		MOCK_SERVER.enqueue(new MockResponse().setBody(responseBody));
 		Assertions.assertThrows(YgoprodeckException.class, //
 				() -> createApiWithCallAdapterFactory().test().execute());

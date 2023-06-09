@@ -1,14 +1,13 @@
 package io.github.magicdgs.gaming.ygoprodeck.model.json;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
 import io.github.magicdgs.gaming.ygoprodeck.model.Attribute;
 import io.github.magicdgs.gaming.ygoprodeck.model.Card;
 import io.github.magicdgs.gaming.ygoprodeck.model.CardSetItemDTO;
 import io.github.magicdgs.gaming.ygoprodeck.model.CheckDBVersionDTO;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class JsonConverterTest {
 

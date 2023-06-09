@@ -1,14 +1,15 @@
 package io.github.magicdgs.gaming.ygoprodeck.client;
 
-import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-
-import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckException;
 import io.github.magicdgs.gaming.ygoprodeck.client.exception.YgoprodeckResponseErrorException;
+import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Callback to be used by the library to wait for the result and/or get the error model if it fails.
@@ -77,13 +78,13 @@ public final class YgoprodeckResultCallback<T> implements Callback<T> {
 	}
 
 	@Override
-	public void onResponse(Call<T> call, Response<T> response) {
+	public void onResponse(@NotNull Call<T> call, @NotNull Response<T> response) {
 		this.response = response;
 		countdown.countDown();
 	}
 
 	@Override
-	public void onFailure(Call<T> call, Throwable t) {
+	public void onFailure(@NotNull Call<T> call, @NotNull Throwable t) {
 		failure = t;
 		if (t instanceof YgoprodeckResponseErrorException) {
 			this.errorDto = ((YgoprodeckResponseErrorException) t).getError();

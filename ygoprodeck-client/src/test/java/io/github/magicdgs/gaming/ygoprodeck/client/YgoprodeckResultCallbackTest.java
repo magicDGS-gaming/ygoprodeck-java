@@ -1,25 +1,24 @@
 package io.github.magicdgs.gaming.ygoprodeck.client;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 import io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit.YgoprodeckExceptionCallAdapterFactory;
+import io.github.magicdgs.gaming.ygoprodeck.model.ErrorDTO;
+import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi.TestResponse;
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import io.github.magicdgs.gaming.ygoprodeck.model.*;
-import io.github.magicdgs.gaming.ygoprodeck.model.json.JsonConverter;
-import lombok.extern.slf4j.Slf4j;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 public class YgoprodeckResultCallbackTest {
@@ -75,7 +74,7 @@ public class YgoprodeckResultCallbackTest {
 	
 	@Test
 	public void testErrorModelWhenUnknownModelReturn() throws Exception {
-		final String responseBody = JsonConverter.asJson(Arrays.asList("unknown"));
+		final String responseBody = JsonConverter.asJson(List.of("unknown"));
 		MOCK_SERVER.enqueue(new MockResponse().setResponseCode(200).setBody(responseBody));
 		YgoprodeckResultCallback<TestResponse> resultCallback = enqueueCallbackAndWait();
 		Assertions.assertAll(

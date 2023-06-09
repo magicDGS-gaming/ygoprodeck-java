@@ -31,7 +31,7 @@ class RateLimitBlockingInterceptorTest {
     @BeforeAll
     static void beforeAll() {
         MOCK_SERVER = new MockWebServer();
-        log.atDebug().setMessage(() -> "Warm-Up mock server").log();;
+        log.atDebug().setMessage(() -> "Warm-Up mock server").log();
         // warmup the mock web-server with some calls
         executeTestCallsAndAssertSuccess(createClient(), 100);
     }
@@ -54,9 +54,9 @@ class RateLimitBlockingInterceptorTest {
 
     private static OkHttpClient createClientWithTestInterceptors(final RateLimitBlockingInterceptor interceptor) {
         return createClient(
-                chain -> addAfterTimeHeader(chain),
+                RateLimitBlockingInterceptorTest::addAfterTimeHeader,
                 interceptor,
-                chain -> addBeforeTimeHeader(chain));
+                RateLimitBlockingInterceptorTest::addBeforeTimeHeader);
     }
 
     private static Response addAfterTimeHeader(final Interceptor.Chain chain) {
@@ -98,14 +98,13 @@ class RateLimitBlockingInterceptorTest {
                 }) //
                 .map(request -> {
                     Response response = assertDoesNotThrow(() -> client.newCall(request).execute());
-                    assertTrue(response.isSuccessful(), "Not successful :" + response.toString());
+                    assertTrue(response.isSuccessful(), "Not successful :" + response);
                     return response;
                 })
                 .toList();
     }
 
     private void assertCallsAfterTimespan(final Duration expectedSpan, final long msBuffer, final Response first, final Response second) {
-        // TODO: maybe just pass as a parameter if we wanna to test exactly?
         // span within calls is expected to be the testDuration, but we accept some milliseconds of difference
         final Duration expectedSpanWithBuffer = expectedSpan.minusMillis(msBuffer);
         final Duration actualSpan = calculateTimespan(first, second);

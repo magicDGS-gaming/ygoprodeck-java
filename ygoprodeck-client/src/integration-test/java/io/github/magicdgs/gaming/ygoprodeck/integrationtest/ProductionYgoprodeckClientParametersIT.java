@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.*;
+import static io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi.GetCardInfoQueryMap;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 public class ProductionYgoprodeckClientParametersIT {
