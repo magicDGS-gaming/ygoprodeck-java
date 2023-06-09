@@ -40,16 +40,13 @@ public class YgoprodeckExceptionCallAdapterFactory extends CallAdapter.Factory {
       return new ExceptionCallAdapter<>(responseType, callbackExecutor);
     }
 
-    @AllArgsConstructor(access = AccessLevel.PACKAGE)
-        private record ExceptionCallAdapter<R>(Type responseType,
-                                               Executor callbackExecutor)
+    private record ExceptionCallAdapter<R>(Type responseType, Executor callbackExecutor)
             implements CallAdapter<R, Call<R>> {
-
         @NotNull
         @Override
         public Call<R> adapt(@NotNull Call<R> call) {
             return new YgoprodeckCallWrapper<>(call, callbackExecutor);
         }
-        }
+    }
 	
 }

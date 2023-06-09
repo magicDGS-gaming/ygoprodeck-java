@@ -51,11 +51,11 @@ public class YgoprodeckFilesResources {
 					Paths.get(YGOPRODECK_FILES_URI);
 				} catch (FileSystemNotFoundException e) {
 					// if this happens, we are getting it from the zipfs
-					try (FileSystem zipfs = FileSystems.newFileSystem(
+					// IMPORTANT: we should call this method and
+					// do not close the filesystem to allow the files to be accessed
+					FileSystem zipfs = FileSystems.newFileSystem(
 							YGOPRODECK_FILES_URI,
-							Collections.singletonMap("create", "true"))) {
-						// this is trigger only to load the filesystem for zipfs
-					}
+							Collections.singletonMap("create", "true"));
 				}
 			}
 		} catch (Exception e) {
