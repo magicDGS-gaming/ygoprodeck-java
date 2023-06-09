@@ -3,7 +3,7 @@ package io.github.magicdgs.gaming.ygoprodeck.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.magicdgs.gaming.ygoprodeck.api.DatabaseApi;
 import io.github.magicdgs.gaming.ygoprodeck.api.ImagesApi;
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckExceptionCallAdapterFactory;
+import io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit.YgoprodeckExceptionCallAdapterFactory;
 import io.github.magicdgs.gaming.ygoprodeck.model.exception.YgoprodeckException;
 import io.github.magicdgs.gaming.ygoprodeck.utils.okhttp.OkhttpClientBuilder;
 import lombok.AccessLevel;

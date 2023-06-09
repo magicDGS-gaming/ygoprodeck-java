@@ -3,7 +3,7 @@ package io.github.magicdgs.gaming.ygoprodeck.client;
 import java.io.IOException;
 import java.util.Arrays;
 
-import io.github.magicdgs.gaming.ygoprodeck.api.retrofit.YgoprodeckExceptionCallAdapterFactory;
+import io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit.YgoprodeckExceptionCallAdapterFactory;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi;
 import io.github.magicdgs.gaming.ygoprodeck.testutils.RetrofitTestApi.TestResponse;
 import org.junit.jupiter.api.AfterAll;

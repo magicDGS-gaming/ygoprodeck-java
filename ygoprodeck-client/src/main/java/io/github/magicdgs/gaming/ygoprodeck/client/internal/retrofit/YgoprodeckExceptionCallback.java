@@ -1,4 +1,4 @@
-package io.github.magicdgs.gaming.ygoprodeck.api.retrofit;
+package io.github.magicdgs.gaming.ygoprodeck.client.internal.retrofit;
 
 import java.util.concurrent.Executor;
 
